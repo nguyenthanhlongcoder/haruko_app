@@ -29,16 +29,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: myColors.dividerColor,
-        marginVertical: 5,
+        marginVertical: 3,
         padding: 10,
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 1,
-        elevation: 2
+        backgroundColor: '#fff'
+       
     },
     icon:{
         width: 40,
