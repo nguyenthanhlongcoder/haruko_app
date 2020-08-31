@@ -6,7 +6,7 @@ import { HeaderBackground } from 'react-navigation-stack';
 import { render } from 'react-dom';
 import Fonts from '../assets/Fonts'
 
-export default class AppNavigation extends React.Component {
+export default class AppBottomNavigation extends React.Component {
   constructor()
   {
       super();
@@ -27,12 +27,7 @@ render(){
     return(
   <Appbar style={s.top}
   >
-  <Text style={{fontFamily:'roboto-medium-italic',fontSize:25, marginLeft:10}}>Haruko</Text>
-  <TextInput
-          style={s.textInputStyle}
-          underlineColorAndroid="transparent"
-          placeholder="Search Here"
-        />
+
   </Appbar>);
   }
   else
@@ -55,7 +50,7 @@ const s = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top:0,  
+    bottom:0, 
     alignItems:'center',
     justifyContent:'center',
     height:100,

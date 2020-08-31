@@ -14,7 +14,9 @@ const ActivityProject = createStackNavigator(
   {
     initialRouteName: 'First',
 });
+ 
 
+     
 const styles = StyleSheet.create({
   container: {
     flex: 1,

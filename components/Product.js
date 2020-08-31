@@ -1,26 +1,34 @@
 import React,{useState} from 'react'
-import {View,Text,Image,StyleSheet} from 'react-native'
-import * as Font from 'expo-font'
+import {View,Text,Image,ActivityIndicator, StatusBar,StyleSheet} from 'react-native'
 import Color from '../assets/myColors'
 import AppLoading from 'expo'
-const fetchFonts=()=>{
-    return Font.loadAsync({
-        'roboto-bold':require('../assets/fonts/Roboto-Bold.ttf'),
-        'roboto-italic':require('../assets/fonts/Roboto-Italic.ttf'),
-        'roboto-regular':require('../assets/fonts/Roboto-Regular.ttf'),
-        'roboto-medium':require('../assets/fonts/Roboto-Medium.ttf'),
-        'roboto-blackitalic':require('../assets/fonts/Roboto-BlackItalic.ttf'),
-        'roboto-black':require('../assets/fonts/Roboto-Black.ttf'),
-        'roboto-light':require('../assets/fonts/Roboto-Light.ttf'),
-    })
-    }
+import Fonts from '../assets/Fonts'
+
 export default class Product extends React.Component{
   
-    
+  constructor()
+  {
+      super();
+      this.state = {
+        assetsLoaded: false,
+    };
+      this.componentDidMount();
+  }
+   
+ 
+    async componentDidMount() {
+    await  Fonts();
+    this.setState({ assetsLoaded: true });
+      }
  render(){ 
-    fetchFonts();
+    const {assetsLoaded} = this.state;
+    if( assetsLoaded ) {
     if(this.props.item.sale!='')
-      { return(
+
+      {
+       
+           return(
+         
          <View style={styles.container} onTouchEnd={this.props.onPress} >
          <View style={{width:50,height:50,position:'absolute',zIndex:1,right:0,top:0,alignItems:'center',}}>
          <Image  style={{width:50,height:50,position:'absolute',zIndex:0,right:0,top:0,opacity:0.9}}  source={require('../assets/warranty_100px.png')}/>
@@ -38,6 +46,7 @@ export default class Product extends React.Component{
     else
     {
         return(
+            
             <View style={styles.container} onTouchEnd={this.props.onPress} >
            <Image style={styles.img,{zIndex:0}} source={this.props.item.image}/>
            <Text onPress={this.props.onPress} style={styles.content}>{this.props.item.content}</Text>
@@ -48,7 +57,17 @@ export default class Product extends React.Component{
        </View>)
     }
 }
-
+else
+{
+    return (
+        <View style={styles.container}>
+            <ActivityIndicator />
+            <StatusBar barStyle="default" />
+        </View>
+    );
+}
+ }
+ 
 }
 const styles = StyleSheet.create({
     container: {
@@ -83,7 +102,7 @@ backgroundColor:'#EBEEF3',
         
       },
       content:{
-        marginTop:50,
+        marginTop:10,
         alignContent:"center",
         fontFamily:'roboto-light',
         fontSize:15
