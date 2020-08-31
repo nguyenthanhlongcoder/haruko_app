@@ -5,10 +5,13 @@ import AccountHeader from '../components/AccountHeader';
 import AccountMyProduct from '../components/AccountMyProducts';
 import AccountSetting from '../components/AccountSetting';
 import {myColors} from '../assets/myColors';
+import AppBar from '../components/AppBar';
+import { Appbar } from 'react-native-paper';
 
 export default function AccountScreen() {
     return (
         <View style={{flex: 1}}>
+            <AppBar title=''/>
             <AccountHeader />
             <AccountPurchases />
             <View style={styles.divider}/>
@@ -22,7 +25,7 @@ export default function AccountScreen() {
 const styles = StyleSheet.create({
     divider:{
         height: 10,
-        backgroundColor: myColors.dividerColor,
+        backgroundColor: '#d5d5d5',
         opacity: 0.3
     }
 })

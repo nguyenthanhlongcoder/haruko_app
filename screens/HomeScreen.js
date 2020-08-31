@@ -9,7 +9,7 @@ import AppBar from '../components/AppBar';
 export default function HomeScreen() {
     return (
         <View style={styles.container}>
-            <AppBar/>
+            <AppBar title='Home'/>
             <ScrollView>
                 <HomeCarousel style={styles.carousel} />
                 <HomeAbout />
