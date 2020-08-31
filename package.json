@@ -8,24 +8,40 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "~38.0.8",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/bottom-tabs": "^5.8.0",
+    "expo": "^38.0.9",
+    "expo-font": "~8.2.1",
     "expo-status-bar": "^1.0.2",
     "firebase": "7.9.0",
+    "prop-types": "^15.7.2",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+    "react-native-elements": "^2.3.1",
     "react-native-email": "^1.1.0",
+    "react-native-gesture-handler": "^1.7.0",
     "react-native-immediate-phone-call": "^2.0.0",
     "react-native-looped-carousel": "^0.1.13",
     "react-native-maps": "0.27.1",
     "react-native-paper": "^4.0.1",
     "react-native-phone-call": "^1.0.9",
+    "react-native-screens": "^2.10.1",
+    "react-native-slideshow": "^1.0.1",
+    "react-native-snap-carousel": "^4.0.0-beta.6",
     "react-native-vector-icons": "^7.0.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "react-navigation": "^4.4.0",
+    "react-navigation-stack": "^2.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "~8.1.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   },
   "private": true
 }
