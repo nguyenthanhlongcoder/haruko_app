@@ -1,15 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './screens/HomeScreen';
+import ProductDetail from './components/ProductDetail';
 import NotificationScreen from './screens/NotificationScreen';
-import {  } from 'react-native-paper'
 import AccountSreen from './screens/AccountScreen'
-import ProductViewScreen from './screens/ProductsViewScreen';
+import ProductStack from './screens/ProductStack';
 export default function App() {
   return (
-    <View style={styles.container}>
-      <ProductViewScreen/>
-    </View>
+    <ProductStack/>
   );
 }
 
