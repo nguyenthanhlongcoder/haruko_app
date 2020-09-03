@@ -7,7 +7,12 @@ import ProductsViewScreen from "../screens/ProductsViewScreen";
 import ProductCartScreen from "../screens/ProductCartScreen";
 import ChatScreen from "../screens/ChatScreen";
 const Stack=createStackNavigator()
-export default function ProductStack(){
+export default function ProductStack({navigation, route}){
+  if (route.state && route.state.index > 0) {
+    navigation.setOptions({tabBarVisible: false});
+} else {
+    navigation.setOptions({ tabBarVisible: true });
+}
   return(
     <Stack.Navigator headerMode='none'>
       <Stack.Screen name='ProductsViewScreen' component={ProductsViewScreen}/>

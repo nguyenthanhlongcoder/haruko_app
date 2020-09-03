@@ -41,35 +41,25 @@ export default class ProductDetail extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Detail</Text>
-        <View style={styles.containerItem}>
-          <MaterialCommunityIcons style={styles.icon} name="warehouse" />
-          <Text style={[styles.content, { flex: 1 }]}>Storage</Text>
-          <Text style={styles.callNow}>1972</Text>
-        </View>
         <View style={styles.divider} />
+        <View style={styles.containerItem}>
+          <Text style={styles.type}>Stock</Text>
+          <Text style={styles.content}>10</Text>
+        </View>
 
         <View style={styles.containerItem}>
-          <FontEntypo style={styles.icon} name="app-store" />
-          <Text style={[styles.content, { flex: 1 }]}>Trademark</Text>
-
-          <Text style={styles.callNow}>Haruko</Text>
-          <Icon
-            style={{ textAlign: "right", fontSize: 25, opacity: 0.5 }}
-            name="right"
-          />
+          <Text style={styles.type}>Màu Sắc</Text>
+          <Text style={styles.content}>Nhiều Màu</Text>
         </View>
-        <View style={styles.divider} />
 
         <View style={styles.containerItem}>
-          <Icon style={styles.icon} name="mail" />
-          <Text style={[styles.content, { flex: 1 }]}>From</Text>
-          <Text style={styles.callNow}>Haruko shop</Text>
+          <Text style={styles.type}>Bảo Hành</Text>
+          <Text style={styles.content}>18 Tháng</Text>
         </View>
-        <View style={styles.divider} />
         <View
           style={
             (styles.containerItem,
-            { height: this.state.containerHeight, backgroundColor: "#fff" })
+              { height: this.state.containerHeight, backgroundColor: "#fff" })
           }
         >
           <Text
@@ -99,47 +89,33 @@ export default class ProductDetail extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 15,
     paddingBottom: 15,
-    borderRadius: 20,
     backgroundColor: "#fff",
-    margin: 5,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 2,
+
   },
   title: {
-    fontSize: 20,
-    marginVertical: 15,
-    textTransform: "uppercase",
-    color: myColors.defaultPrimaryColor,
+    fontSize: 15,
+    margin: 15,
+    fontWeight: "bold"
   },
   containerItem: {
     flexDirection: "row",
     marginVertical: 8,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
+    paddingHorizontal: 15
   },
-  icon: {
-    marginRight: 15,
-    fontSize: 20,
+  type: {
+    flex: 1,
+    fontSize: 15,
+    color: 'rgb(128,128,128)'
   },
   content: {
-    fontSize: 15,
-  },
-  callNow: {
-    flex: 1,
-    textAlign: "right",
-    color: myColors.defaultPrimaryColor,
+    flex: 2,
     fontSize: 15,
   },
   divider: {
-    height: 2,
-    backgroundColor: myColors.dividerColor,
-  },
+    height: 1,
+    backgroundColor: myColors.dividerColor
+  }
 });

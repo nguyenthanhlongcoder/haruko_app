@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator} from '@react-navigation/stack'
 import PurchaseScreen from './PurchaseScreen';
 import AccountScreen from './AccountScreen';
+import MyProductScreen from './MyProductScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,10 +15,10 @@ export default function AccountScreenStack({navigation, route}){
     return(
         <Stack.Navigator
         headerMode="none"
-        initialRouteName='AccountScreen'
-        >
+        initialRouteName='AccountScreen'       >
             <Stack.Screen name="AccountScreen" component={AccountScreen}/>
             <Stack.Screen name="PurchaseScreen" component={PurchaseScreen}/>
+            <Stack.Screen name="MyProductScreen" component={MyProductScreen}/>
         </Stack.Navigator>
     )
 }

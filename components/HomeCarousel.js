@@ -15,9 +15,9 @@ export default function HomeCarousel(){
           style={state.size}
           autoplay
           bullets
-          onAnimateNextPage={(p) => console.log(p)}
+          onAnimateNextPage={(p) => {}}
         >
-          <Image style={{width: '100%', height: '100%'}} source={{uri: 'https://yulcsa.com/wp-content/uploads/2019/03/weblila2.jpg'}} resizeMode='center'/>
+          <Image style={{width: Dimensions.get('window').width, height: '100%'}} source={{uri: 'http://www.hoshinoresorts-magazine.com/wp-content/uploads/2016/06/lanterns-in-japan-1500x1000_150dpi.jpg'}} resizeMode='center'/>
           <View style={[{ backgroundColor: 'red' }, state.size]}><Text>2</Text></View>
           <View style={[{ backgroundColor: 'blue' }, state.size]}><Text>3</Text></View>
         </Carousel>

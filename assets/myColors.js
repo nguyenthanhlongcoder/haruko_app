@@ -1,10 +1,10 @@
 export const myColors = {
-    darkPrimaryColor: '#0288D1',
-    defaultPrimaryColor: '#03A9F4',
-    lightPrimaryColor: '#B3E5FC',
-    textPrimaryColor: '#FFFFFF',
-    accentColor: '#448AFF',
+    darkPrimaryColor: '#388E3C',
+    defaultPrimaryColor: '#4CAF50',
+    lightPrimaryColor: '#C8E6C9', //den day roi
+    textPrimaryColor: '#FFF',
+    accentColor: '#8BC34A',
     primaryTextColor: '#212121',
     secondaryTextColor: '#757575',
-    dividerColor: '#D5D5D5D5'
+    dividerColor: 'rgba(189,189,189,0.5)'
 }

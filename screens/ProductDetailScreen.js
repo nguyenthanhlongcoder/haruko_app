@@ -1,27 +1,31 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
+  StyleSheet,
+  SafeAreaView,
   View,
   FlatList,
   ScrollView,
   Image,
   Button,
+  StatusBar,
+  Dimensions,
+  Platform
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import ProductTitle from "../components/ProductTitle";
 import ProductDetail from "../components/ProductDetail";
 import Product from "../components/Product";
-import AppBottomNavigation from "../components/AppBottomNavigation";
+import AppBarLight from '../components/AppBarLight';
 import { myColors } from "../assets/myColors";
-import ProductDetailAppBar from "../components/ProductDetailAppBar";
+import MyStatusBar from '../components/MyStatusBar';
 
 export default class ProductDetailScreen extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
-     item: item=this.props.route.params,
+      item: item = this.props.route.params,
       conData: [
         {
           url: require("../assets/favicon.png"),
@@ -111,33 +115,30 @@ export default class ProductDetailScreen extends React.Component {
     );
   };
   render() {
+    const { width } = Dimensions.get('window');
     const { navigation } = this.props;
-   item=this.props.route.params
+    item = this.props.route.params
     return (
-      <View style={styles.container}>
-        <ProductDetailAppBar
-          onPress={() => this.props.navigation.navigate("ProductCartScreen")}
-          title={this.state.item.content}
-        />
+      <SafeAreaView style={styles.container}>
+        <StatusBar />
+        <AppBarLight title='' navigation={navigation} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ margin: 5 }}>
+          <View>
             <Carousel
               ref={(c) => {
                 this._carousel = c;
               }}
               data={this.state.cateData}
               renderItem={this._renderItem}
-              sliderWidth={400}
-              itemWidth={300}
+              sliderWidth={width}
+              itemWidth={width}
             />
           </View>
-          <View>
             <ProductTitle item={this.state.item} />
-          </View>
-
+            <View style={styles.divider}/>
           <ProductDetail item={this.state.item} />
           <View style={styles.containerItem}>
-            <Text style={styles.title}>Same</Text>
+            <Text style={styles.title}>Similar Products</Text>
             <FlatList
               data={this.state.conData}
               horizontal={true}
@@ -149,8 +150,10 @@ export default class ProductDetailScreen extends React.Component {
           </View>
         </ScrollView>
 
-        <Button title="Add to Cart" />
-      </View>
+        {Platform.OS==='ios'?
+        <Text style={styles.button}>Add to Cart</Text>:
+        <Button title="Add to Cart" color={myColors.defaultPrimaryColor}/>}
+      </SafeAreaView>
     );
   }
 }
@@ -158,18 +161,30 @@ export default class ProductDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: myColors.dividerColor,
     flexDirection: "column",
   },
   containerItem: {
     flexDirection: "column",
-    marginVertical: 8,
-    backgroundColor: "#fff",
+    backgroundColor: myColors.dividerColor
   },
   title: {
-    fontSize: 20,
-    marginVertical: 4,
-    textTransform: "uppercase",
-    color: myColors.defaultPrimaryColor,
+    margin: 15,
+    fontWeight: "bold"
   },
+  divider: {
+    height: 10,
+    backgroundColor: myColors.dividerColor,
+  },
+  button:{
+    width: Dimensions.get('window').width,
+    backgroundColor: myColors.defaultPrimaryColor,
+    fontSize: 20,
+    textAlign: "center",
+    color: myColors.textPrimaryColor,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset:{width: 0, height: 2},
+    shadowOpacity: 0.4,
+    elevation: -3
+  }
 });

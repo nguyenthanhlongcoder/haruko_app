@@ -6,9 +6,6 @@ import {
   Animated,
   View,
   FlatList,
-  Image,
-  ScrollView,
-  ListView,
   Dimensions,
 } from "react-native";
 import Product from "../components/Product";
@@ -16,18 +13,10 @@ import CategoryItem from "../components/CategoryItem";
 import { myColors } from "../assets/myColors";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
 import SearchBar from "../components/SearchBar";
-import firebase from "firebase";
-var firebaseConfig = {
-  apiKey: "AIzaSyDAmGvye9SLix7xP1FNMQbpsDcy_2kaY-c",
-  authDomain: "haruko-a9264.firebaseapp.com",
-  databaseURL: "https://haruko-a9264.firebaseio.com",
-  projectId: "haruko-a9264",
-  storageBucket: "haruko-a9264.appspot.com",
-  messagingSenderId: "711513292291",
-  appId: "1:711513292291:web:71f9ff030d5c36dd96d836",
-  measurementId: "G-H5YMWBJ9EQ",
-};
-firebase.initializeApp(firebaseConfig);
+import MyStatusBar from '../components/MyStatusBar';
+import {firebaseApp} from '../components/FirebaseConfig';
+import Icon from 'react-native-vector-icons/Foundation';
+import { element } from "prop-types";
 
 export default class ProductsViewScreen extends React.Component {
 
@@ -36,6 +25,7 @@ export default class ProductsViewScreen extends React.Component {
     this.state = {
       iconName: "right",
       cateListHeight: 0,
+      cateGory:[]
     };
   }
   componentDidMount() {
@@ -44,14 +34,15 @@ export default class ProductsViewScreen extends React.Component {
   defaultLoadData = () => {
     let catelist = [];
     let Productlist = [];
-    firebase
+    firebaseApp
       .database()
       .ref("/Shop/")
       .on("value", (data) => {
-        data.child("Category").forEach((element) => {
-          var cate = {
-            Title: "",
-          };
+        data.child("Category").forEach((element) => { 
+          var cate={
+            Title:'',
+            isChecked:false
+          }
           cate.Title = element.val().Title;
           catelist.push(cate);
         });
@@ -72,13 +63,30 @@ export default class ProductsViewScreen extends React.Component {
 
           Productlist.push(product);
         });
-        this.setState({ data: catelist, product: Productlist });
+      
+        this.setState({ data:catelist, product: Productlist });
       });
   };
-  onCateItemPress = (item,index) => {
+  onCateItemPress = (item,ind) => {
     let Productlist = [];
-    console.log(this.state.data[index])
-    firebase
+    let cateList=[]
+    
+   for( var i=0;i<this.state.data.length;i++)
+   {
+     if(i===ind)
+     {
+       this.state.data[ind].isChecked=true;
+     }
+     else{
+      this.state.data[i].isChecked=false;
+     }
+   }
+
+this.setState({
+  data:this.state.data,
+})
+console.log(this.state.data[ind].isChecked)
+  firebaseApp
       .database()
       .ref("/Shop/")
       .on("value", (data) => {
@@ -109,7 +117,7 @@ export default class ProductsViewScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Product img={require(image)} content={content}/> */}
+        <MyStatusBar />
         <SearchBar
           onPress={() => this.props.navigation.navigate("Third")}
         />
@@ -129,14 +137,17 @@ export default class ProductsViewScreen extends React.Component {
           }}
           style={{
             flexDirection: "row",
-            height: Dimensions.get("window").height / 15,
             alignItems: "center",
+            padding: 5,
+            backgroundColor: '#fff',
+            justifyContent: 'center'
           }}
         >
-          <Text style={{ flex: 1, fontSize: 25 }}>Category</Text>
+          <Icon name='list-bullet' size={25} color={myColors.defaultPrimaryColor} style={{marginHorizontal:5}}/>
+          <Text style={{fontSize: 25 , opacity: .7}}>Category</Text>
           <IconAntDesign
             name={this.state.iconName}
-            style={{ fontSize: 25, flex: 1, textAlign: "right" }}
+            style={{ fontSize: 20, flex: 1, textAlign: "right" }}
           />
         </View>
         <View style={{ height: this.state.cateListHeight, width: "100%" }}>
@@ -157,7 +168,7 @@ export default class ProductsViewScreen extends React.Component {
               );
             }}
             showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
           />
         </View>
         <FlatList
@@ -183,9 +194,8 @@ export default class ProductsViewScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: 'column',
+  
   },
   scrollViewStyle: {
     justifyContent: "flex-end",

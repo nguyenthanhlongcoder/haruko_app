@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   ActivityIndicator,
   StatusBar,
   StyleSheet,
@@ -26,9 +25,10 @@ export default class CategoryItem extends React.Component {
   }
   render() {
     const { assetsLoaded } = this.state;
+    console.log(this.props)
     if (assetsLoaded) {
       return (
-        <View style={styles.container} onTouchEnd={this.props.onPress}>
+        <View style={[styles.container,this.props.item.isChecked?styles.active: null]} onTouchEnd={this.props.onPress}>
           <Text style={styles.content}>
             {this.props.item.Title}
           </Text>
@@ -49,11 +49,14 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
     alignItems: "center",
     justifyContent: "center",
-    width:Dimensions.get('window').width/3,
-    height: Dimensions.get('window').height/10,
+    width:Dimensions.get('window').width/5,
+    height: Dimensions.get('window').width/5,
     borderColor:myColors.dividerColor,
     borderWidth:2,
 
+  },
+  active:{
+    borderColor: myColors.defaultPrimaryColor
   },
   content: {
     textAlign:'center',
