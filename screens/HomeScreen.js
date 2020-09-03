@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import HomeCarousel from '../components/HomeCarousel';
 import HomeAbout from '../components/HomeAbout';
 import HomeContact from '../components/HomeContact';
 import HomeMap from '../components/HomeMap';
 import { myColors } from '../assets/myColors';
 import AppBar from '../components/AppBar';
+import MyStatusBar from '../components/MyStatusBar'
 export default function HomeScreen() {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <MyStatusBar/>
             <AppBar title='Home'/>
             <ScrollView>
                 <HomeCarousel style={styles.carousel} />
@@ -16,7 +18,7 @@ export default function HomeScreen() {
                 <HomeContact style={styles.shadow} />
                 <HomeMap style={styles.shadow} />
             </ScrollView>
-        </View>
+        </SafeAreaView>
     );
 }
 
