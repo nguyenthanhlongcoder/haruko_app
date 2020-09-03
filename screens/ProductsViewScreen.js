@@ -75,8 +75,9 @@ export default class ProductsViewScreen extends React.Component {
         this.setState({ data: catelist, product: Productlist });
       });
   };
-  onCateItemPress = (item) => {
+  onCateItemPress = (item,index) => {
     let Productlist = [];
+    console.log(this.state.data[index])
     firebase
       .database()
       .ref("/Shop/")
@@ -100,7 +101,11 @@ export default class ProductsViewScreen extends React.Component {
         });
         this.setState({ product: Productlist });
       });
+     
   };
+  _scrollEnd = (evt) => {
+    this.refs.flatList1.scrollToEnd();
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -136,13 +141,16 @@ export default class ProductsViewScreen extends React.Component {
         </View>
         <View style={{ height: this.state.cateListHeight, width: "100%" }}>
           <FlatList
+         
             horizontal={true}
             data={this.state.data}
-            renderItem={({ item }) => {
+            ref="cateList"
+        onScrollAnimationEnd={()=>{this.refs.cateList.scrollTop}}
+            renderItem={({ item,index }) => {
               return (
                 <CategoryItem
                   onPress={() => {
-                    this.onCateItemPress(item);
+                    this.onCateItemPress(item,index);
                   }}
                   item={item}
                 />
