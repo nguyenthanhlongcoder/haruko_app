@@ -1,142 +1,187 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View,FlatList, Image,ScrollView,ListView } from 'react-native';
-import Product from '../components/Product'
-import CategoryItem from '../components/CategoryItem'
-import AppNavigation from '../components/AppNavigation'
-export default class ProductsViewScreen extends React.Component {
-  static navigationOptions =
-  {
-    headerShown: false,
-  };
-    
-     constructor(){
-       super();
-       this.state={
-        conData:[{
-          image:require('../assets/favicon.png'),
-          content:'ogre',
-          sale:'45%'
-          ,price:18000
-          ,sold:8
-      },
-      {
-          image:require('../assets/favicon.png'),
-          content:'ogre',
-          sale:'40%'
-          ,price:16000
-          ,sold:7
-      },
-      {
-        image:require('../assets/favicon.png'),
-        content:'ogre',
-        sale:'45%'
-        ,price:18000
-        ,sold:8
-    },
-    {
-        image:require('../assets/favicon.png'),
-        content:'ogre',
-        sale:'40%'
-        ,price:16000
-        ,sold:7
-    },
-    {
-      image:require('../assets/favicon.png'),
-      content:'ogre',
-      sale:''
-      ,price:18000
-      ,sold:8
-  },
-  {
-      image:require('../assets/favicon.png'),
-      content:'ogre',
-      sale:'40%'
-      ,price:16000
-      ,sold:7
-  },
-  {
-    image:require('../assets/favicon.png'),
-    content:'ogre',
-    sale:'45%'
-    ,price:18000
-    ,sold:8
-},
-{
-    image:require('../assets/favicon.png'),
-    content:'ogre',
-    sale:''
-    ,price:16000
-    ,sold:7
-},
-    ],
-    cateData:[
-      {
-        image:require('../assets/bracelet_100px.png'),
-        content:'Bracelet',
-      },
-      {
-        image:require('../assets/teddy_bear_100px.png'),
-        content:'Doll',
-      },
-      {
-        image:require('../assets/hat_100px.png'),
-        content:'Hat',
-      },
-      {
-        image:require('../assets/lantern_100px.png'),
-        content:'Lantern',
-      },
-    ]
-       }
-       
-     }
- render(){ 
-  
-   return (
- 
-    <View style={styles.container}>
-    <AppNavigation/>
-    {/* <Product img={require(image)} content={content}/> */}
-    <ScrollView
-  showsVerticalScrollIndicator={false}
-  >
-  <View style={{height:90, width:'100%', marginTop:100}}>
-    <FlatList
-    horizontal={true}
-      data={this.state.cateData}
-      renderItem={({item})=>{return(<CategoryItem item={item}/>)}}
-     showsHorizontalScrollIndicator={false}
-      keyExtractor={(item, index) => index}
-    />
-  </View>
-    <FlatList 
-       style={{ height:500}}
-        data={this.state.conData}
-        numColumns={2}
-        keyExtractor={(item, index) => index}
-        nestedScrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item})=>{ return( <Product item={item} onPress={() => this.props.navigation.navigate('Second',item)}/>)}}
-    />   
-      </ScrollView>
-    </View>
-   
-  );
-}
-}
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  Animated,
+  View,
+  FlatList,
+  Image,
+  ScrollView,
+  ListView,
+  Dimensions,
+} from "react-native";
+import Product from "../components/Product";
+import CategoryItem from "../components/CategoryItem";
+import { myColors } from "../assets/myColors";
+import IconAntDesign from "react-native-vector-icons/AntDesign";
+import SearchBar from "../components/SearchBar";
+import firebase from "firebase";
+var firebaseConfig = {
+  apiKey: "AIzaSyDAmGvye9SLix7xP1FNMQbpsDcy_2kaY-c",
+  authDomain: "haruko-a9264.firebaseapp.com",
+  databaseURL: "https://haruko-a9264.firebaseio.com",
+  projectId: "haruko-a9264",
+  storageBucket: "haruko-a9264.appspot.com",
+  messagingSenderId: "711513292291",
+  appId: "1:711513292291:web:71f9ff030d5c36dd96d836",
+  measurementId: "G-H5YMWBJ9EQ",
+};
+firebase.initializeApp(firebaseConfig);
 
+export default class ProductsViewScreen extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      iconName: "right",
+      cateListHeight: 0,
+    };
+  }
+  componentDidMount() {
+    this.defaultLoadData();
+  }
+  defaultLoadData = () => {
+    let catelist = [];
+    let Productlist = [];
+    firebase
+      .database()
+      .ref("/Shop/")
+      .on("value", (data) => {
+        data.child("Category").forEach((element) => {
+          var cate = {
+            Title: "",
+          };
+          cate.Title = element.val().Title;
+          catelist.push(cate);
+        });
+        data.child("Product").forEach((element) => {
+          var product = {
+            content: "",
+            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
+            content: "",
+            price: "",
+            sold: 8,
+            category: "",
+            description: "",
+          };
+
+          product.content = element.val().Title;
+          product.price = element.val().Price;
+          product.description = element.val().Description;
+
+          Productlist.push(product);
+        });
+        this.setState({ data: catelist, product: Productlist });
+      });
+  };
+  onCateItemPress = (item) => {
+    let Productlist = [];
+    firebase
+      .database()
+      .ref("/Shop/")
+      .on("value", (data) => {
+        data.child("Product").forEach((element) => {
+          var product = {
+            content: "",
+            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
+            content: "",
+            price: "",
+            sold: 8,
+            category: "",
+            description: "",
+          };
+          if (element.val().Category === item.Title) {
+            product.content = element.val().Title;
+            product.price = element.val().Price;
+            product.description = element.val().Description;
+            Productlist.push(product);
+          }
+        });
+        this.setState({ product: Productlist });
+      });
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        {/* <Product img={require(image)} content={content}/> */}
+        <SearchBar
+          onPress={() => this.props.navigation.navigate("Third")}
+        />
+        <View
+          onTouchEnd={() => {
+            if (
+              this.state.iconName === "right" &&
+              this.state.cateListHeight === 0
+            ) {
+              this.setState({
+                iconName: "down",
+                cateListHeight: Dimensions.get("window").height / 10,
+              });
+            } else {
+              this.setState({ iconName: "right", cateListHeight: 0 });
+            }
+          }}
+          style={{
+            flexDirection: "row",
+            height: Dimensions.get("window").height / 15,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ flex: 1, fontSize: 25 }}>Category</Text>
+          <IconAntDesign
+            name={this.state.iconName}
+            style={{ fontSize: 25, flex: 1, textAlign: "right" }}
+          />
+        </View>
+        <View style={{ height: this.state.cateListHeight, width: "100%" }}>
+          <FlatList
+            horizontal={true}
+            data={this.state.data}
+            renderItem={({ item }) => {
+              return (
+                <CategoryItem
+                  onPress={() => {
+                    this.onCateItemPress(item);
+                  }}
+                  item={item}
+                />
+              );
+            }}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => index}
+          />
+        </View>
+        <FlatList
+          style={{ flex: 1, padding: 2.5 }}
+          data={this.state.product}
+          numColumns={2}
+          keyExtractor={(item, index) => index}
+          nestedScrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <Product
+                item={item}
+                onPress={() => this.props.navigation.navigate("ProductDetailScreen", item)}
+              />
+            );
+          }}
+        />
+      </View>
+    );
+  }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
   scrollViewStyle: {
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-    alignItems: 'center',
-}
+    justifyContent: "flex-end",
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });

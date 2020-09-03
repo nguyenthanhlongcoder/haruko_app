@@ -6,5 +6,5 @@ export const myColors = {
     accentColor: '#448AFF',
     primaryTextColor: '#212121',
     secondaryTextColor: '#757575',
-    dividerColor: '#BDBDBD'
+    dividerColor: '#D5D5D5D5'
 }

@@ -1,18 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './screens/HomeScreen';
+import ProductDetail from './components/ProductDetail';
 import NotificationScreen from './screens/NotificationScreen';
-import {  } from 'react-native-paper'
 import AccountSreen from './screens/AccountScreen';
 import {StatusBar} from 'react-native';
 import ProductViewScreen from './screens/ProductsViewScreen';
 import { createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer} from '@react-navigation/native'
 import MainTabStack from './screens/MainTabStack';
-
+import ProductStack from './screens/ProductStack';
+import ProductCartItem from './components/ProductCartItem';
+import ProductCartScreen from './screens/ProductCartScreen'
 const Stack = createStackNavigator();
 
 export default function App() {
+
   return (
 
     <NavigationContainer>
@@ -20,6 +22,8 @@ export default function App() {
       <Stack.Screen name="Main" component={MainTabStack}/>
     </Stack.Navigator>
     </NavigationContainer>
+   
+    
     
   );
 }

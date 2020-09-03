@@ -1,81 +1,63 @@
-import React,{useState} from 'react'
-import {View,Text,Image,ActivityIndicator, StatusBar,StyleSheet} from 'react-native'
-import Fonts from '../assets/Fonts'
-import Color from '../assets/myColors'
-import AppLoading from 'expo'
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  StatusBar,
+  StyleSheet,
+  Dimensions
+} from "react-native";
+import Fonts from "../assets/Fonts";
+import AppLoading from "expo";
+import { myColors } from "../assets/myColors";
 
-export default class CategoryItem extends React.Component{
-  constructor()
-  {
-      super();
-      this.state = {
-        assetsLoaded: false,
+export default class CategoryItem extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      assetsLoaded: false,
     };
-      this.componentDidMount();
-     
+    this.componentDidMount();
   }
   async componentDidMount() {
-   
-    await  Fonts();
-  this.setState({ assetsLoaded: true });
-    }
- render(){  
-  const {assetsLoaded} = this.state;
-  if( assetsLoaded ) {
-      return(
-            
-            <View style={styles.container}>
-           <Image style={styles.img} source={this.props.item.image}/>
-           <Text onPress={this.props.onPress} style={styles.content}>{this.props.item.content}</Text>
-       </View>)   
+    await Fonts();
+    this.setState({ assetsLoaded: true });
   }
-  else
-{
-    return (
-        <View style={styles.container}>
-            <ActivityIndicator />
-            <StatusBar barStyle="default" />
+  render() {
+    const { assetsLoaded } = this.state;
+    if (assetsLoaded) {
+      return (
+        <View style={styles.container} onTouchEnd={this.props.onPress}>
+          <Text style={styles.content}>
+            {this.props.item.Title}
+          </Text>
         </View>
-    );
-}
-}
-
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+          <StatusBar barStyle="default" />
+        </View>
+      );
+    }
+  }
 }
 const styles = StyleSheet.create({
-    container: {
-        
-      backgroundColor:'rgba(255, 255, 255,1)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width:100,
-       height:140,
-      
-       
-      },
-      img:{
-         width:45,
-         height:45,
-         top:4,
-         backgroundColor:'rgba(0, 0, 0, .2)',
-         position:"absolute",
-         borderRadius:100,
-         
-         shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 12,
-          },
-          shadowOpacity: 0.58,
-          shadowRadius: 16.00,
+  container: {
+    backgroundColor:'#fff',
+    alignItems: "center",
+    justifyContent: "center",
+    width:Dimensions.get('window').width/3,
+    height: Dimensions.get('window').height/10,
+    borderColor:myColors.dividerColor,
+    borderWidth:2,
 
-          elevation: 24,
-         
-      },
-      content:{
-       
-        alignContent:"center",
-        fontFamily:'roboto-medium-italic',
-        fontSize:15
-        
-      }
-})
+  },
+  content: {
+    textAlign:'center',
+    fontSize: 15,
+    color:myColors.defaultPrimaryColor
+  },
+});
