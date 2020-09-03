@@ -7,15 +7,16 @@ export default function SearchBar(props) {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }} />
-      <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={styles.inputGroup}>
-        <Icon style={{width:'20%',textAlign:"center",height:'100%',fontWeight:10,fontSize:35}} name="search1" color="#000" />
+        <Icon name="search1" color='#999999' style={styles.searchIcon}/>
           <TextInput style={styles.input}
           placeholder='Search hear ...' />
         </View>
         <View style={styles.icons}>
-          <Icon onPress={props.onChatPress} style={styles.icon} name="message1" color="#fff" />
           <Icon style={styles.icon} name="shoppingcart" color="#fff" />
+          <Icon onPress={props.onChatPress} style={styles.icon} name="message1" color="#fff" />
+
         </View>
       </View>
     </View>
@@ -24,8 +25,7 @@ export default function SearchBar(props) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 90,
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
     padding: 10,
     backgroundColor: myColors.defaultPrimaryColor,
@@ -44,20 +44,24 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   input: {
-    width: '80%',
-    backgroundColor: "#fff",
-    height: 40
-    ,height:'100%'
-    ,paddingLeft:6
-  },
-  inputGroup: {
-    width: 200,
-    borderColor: "gray",
+    width: '90%',
     backgroundColor: "#fff",
     height: 40,
-    position:'absolute',
-    left:50,
-    
-    flexDirection: "row-reverse",
+    height:'100%',
+    paddingLeft:6,
   },
+  inputGroup: {
+    flex: 2,
+    padding: 5,
+    width: '70%',
+    borderColor: "gray",
+    backgroundColor: "#fff",
+    alignItems: 'center',
+    position:'absolute',
+    flexDirection: "row",
+    borderRadius: 2
+  },
+  searchIcon:{
+    fontSize: 25,
+  }
 });

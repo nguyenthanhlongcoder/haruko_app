@@ -7,7 +7,7 @@ import email from 'react-native-email';
 
 export default function HomeContact() {
 
-    const to = ['haruko@gmail.com','thanhlong@gmail.com'];
+    const to = ['haruko@gmail.com'];
 
     const number = {
         number: '0908652940',
@@ -39,7 +39,7 @@ export default function HomeContact() {
                 <Icon style={styles.icon} name="mail" />
                 <Text style={[styles.content,{flex: 1}]}>haruko@gmail.com</Text>
                 <TouchableOpacity onPress={()=> email(to, {
-                    cc: ['haruko@gmail.com','ok@gmail.com'],
+                    cc: ['haruko@gmail.com'],
                     bcc: 'thanhlong@gmail.com',
                     subject: 'Your subject',
                     body: 'Your content'

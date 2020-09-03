@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     icon:{
-        fontSize: 30,
+        fontSize: 25,
         margin: 15
     },
     name:{
-        fontSize: 17
+        fontSize: 15
     },
     devider: {
         height: 1,
