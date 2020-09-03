@@ -36,9 +36,9 @@ export default class Product extends React.Component {
           <View style={styles.container}>
             <Image
               style={styles.img}
-              source={{ uri: this.props.item.image }}
+              source={{ uri: this.props.item.avatar }}
             />
-            <Text style={styles.content} >
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.content} >
               {this.props.item.content}
             </Text>
             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 10}}>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 15,
-    marginVertical: 8,
+    marginVertical: 5,
     marginHorizontal: 10,
     textTransform: "uppercase"
   },

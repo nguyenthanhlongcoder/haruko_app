@@ -1,9 +1,10 @@
-import React from "react";
+import React ,{ useState } from 'react';
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import { myColors } from "../assets/myColors";
 
 export default function SearchBar(props) {
+  const [text, setText] = useState('');
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }} />
@@ -11,7 +12,11 @@ export default function SearchBar(props) {
         <View style={styles.inputGroup}>
         <Icon name="search1" color='#999999' style={styles.searchIcon}/>
           <TextInput style={styles.input}
-          placeholder='Search hear ...' />
+          placeholder='Search hear ...'
+          onChangeText={text =>{ setText(text);
+          props.onSearch(text)
+          }}
+        defaultValue={text} />
         </View>
         <View style={styles.icons}>
           <Icon style={styles.icon} name="shoppingcart" color="#fff" />
