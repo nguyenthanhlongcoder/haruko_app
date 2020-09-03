@@ -29,41 +29,43 @@ export default class Product extends React.Component {
   }
   render() {
     const { assetsLoaded } = this.state;
-    
+
     if (assetsLoaded) {
       return (
         <TouchableOpacity onPress={this.props.onPress}>
-        <View style={styles.container}>
-          <Image
-            style={styles.img}
-            source={{uri:this.props.item.image}}
-          />
-          <Text style={styles.content} >
-            {this.props.item.content}
-          </Text>
-          <View
-            style={{
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              flexDirection: "row",
-            }}
-          >
-            <Text
-              style={{
-                width: "50%",
-                textAlign: "center",
-                color: myColors.defaultPrimaryColor,
-              }}
-            >
-              <Text style={{ textDecorationLine: "underline" }}>đ</Text>
-              {this.props.item.price}
+          <View style={styles.container}>
+            <Image
+              style={styles.img}
+              source={{ uri: this.props.item.image }}
+            />
+            <Text style={styles.content} >
+              {this.props.item.content}
             </Text>
-            <Text style={{ width: "50%", textAlign: "center" }}>
-              {this.props.item.sold} sold
+            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 10}}>
+              <View style={{flex: 1}}/>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Text
+                  style={{
+                    color: myColors.defaultPrimaryColor,
+                    fontSize: 16
+                  }}
+                >
+                  <Text style={{ textDecorationLine: "underline", fontSize: 13}}>đ</Text>
+                  {this.props.item.price}
+                </Text>
+                <Text>
+                  {this.props.item.sold} sold
             </Text>
+              </View>
+            </View>
+
           </View>
-        </View>
         </TouchableOpacity>
       );
     } else {
@@ -76,27 +78,26 @@ export default class Product extends React.Component {
     }
   }
 }
+
+const width = Dimensions.get('window').width / 2 - 5
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-     borderColor:myColors.dividerColor,
-     borderWidth:2.5,
-    width: Dimensions.get('window').width/2-5,
-    height:Dimensions.get('window').height/3,
-    flexDirection:'column'
+    borderWidth: 3,
+    borderColor: myColors.dividerColor,
+    width: width,
+    height: width * 1.3,
+    flexDirection: 'column',
   },
   img: {
     width: '100%',
     height: '60%',
-    top: 0,
-    position: "absolute",
-   
+
   },
   content: {
-    marginTop:60,
-    fontFamily: "roboto-light",
     fontSize: 15,
+    marginVertical: 8,
+    marginHorizontal: 10,
+    textTransform: "uppercase"
   },
 });

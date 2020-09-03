@@ -30,27 +30,28 @@ export default class ProductTitle extends React.Component {
     if (assetsLoaded) {
       return (
         <View style={styles.container} onTouchEnd={this.props.onPress}>
-          <Text style={[styles.content]}>{this.props.item.content}</Text>
+          <View style={{ padding: 15 }}>
+            <Text style={[styles.content]}>{this.props.item.content}</Text>
+
+            <View style={styles.containerItem}>
+              <Text
+                style={{
+                  color: myColors.defaultPrimaryColor,
+                  fontSize: 20
+                }}
+              >
+                <Text style={{ textDecorationLine: "underline" }}>đ</Text>
+                {this.props.item.price}
+              </Text>
+            </View>
+
+          </View>
           <View style={styles.divider} />
           <View style={styles.containerItem}>
-          <Text
-              style={{
-                width: "50%",
-                textAlign: "left",
-                color: myColors.defaultPrimaryColor,
-                paddingLeft:10
-              }}
-            >
-              <Text style={{ textDecorationLine: "underline" }}>đ</Text>
-              {this.props.item.price}
-            </Text>
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.containerItem}>
-            <Text style={{ width: "50%", textAlign: "left", paddingLeft:10 }}>
+            <Text style={{ width: "50%", textAlign: "left", paddingLeft: 10 }}>
               {this.props.item.sold} sold
             </Text>
-            </View>
+          </View>
         </View>
       );
     } else {
@@ -65,33 +66,21 @@ export default class ProductTitle extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    
-    margin: 5,
     flexDirection: "column",
-    paddingHorizontal: 15,
-    paddingBottom: 15,
-    borderRadius: 5,
     backgroundColor: "#fff",
   },
-  text: {
-    paddingLeft: 10,
-  },
+
   content: {
-    width: "100%",
-    textAlign: "left",
-    fontFamily: "roboto-light",
-    fontSize: 25,
-    paddingLeft:10,
-  
+    fontSize: 20,
+    textTransform: "uppercase"
+
   },
   divider: {
-    height: 2,
+    height: 10,
     backgroundColor: myColors.dividerColor,
-    
   },
   containerItem: {
     flexDirection: "row",
-    marginVertical: 8,
-    
+    padding: 10,
   }
 });

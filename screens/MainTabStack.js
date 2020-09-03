@@ -9,7 +9,7 @@ import {myColors} from '../assets/myColors';
 import AntDesgin from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProductStack from '../screens/ProductStack';
-
+import Octicons from 'react-native-vector-icons/Octicons'
 const Tab = createBottomTabNavigator();
 
 export default function MainTabStack(){

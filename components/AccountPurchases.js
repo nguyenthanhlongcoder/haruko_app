@@ -13,7 +13,7 @@ export default function AccountPurchases(props) {
             <View style={{ flexDirection: 'row', padding: 10 }}>
                 <View style={[styles.containerChild]}>
                     <Icon name="clipboard-text-outline" color={myColors.defaultPrimaryColor} style={styles.clipBoard} />
-                    <Text style={{ fontSize: 17 }}>My Purchases</Text>
+                    <Text style={{ fontSize: 15 }}>My Purchases</Text>
                 </View>
                 <View style={[styles.containerChild, { flexDirection: "row-reverse" }]}>
                     <AntDesign name="right" style={{ fontSize: 20, opacity: 0.6 }} />
