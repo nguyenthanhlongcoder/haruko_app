@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         opacity: 0.7
     },
     image:{
-        width: 300,
+        width: '90%',
         height: 100,
         borderRadius: 10,
         marginVertical: 10

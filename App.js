@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import {  } from 'react-native-paper'
-import AccountSreen from './screens/AccountScreen'
+import AccountSreen from './screens/AccountScreen';
+import {StatusBar} from 'react-native';
 import ProductViewScreen from './screens/ProductsViewScreen';
 import { createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer} from '@react-navigation/native'
@@ -13,6 +14,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
       <Stack.Screen name="Main" component={MainTabStack}/>

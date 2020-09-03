@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { myColors } from '../assets/myColors';
 
-export default function AccountPurchases() {
+export default function AccountPurchases(props) {
     return (
         <View style={styles.container}>
+            <TouchableOpacity
+            onPress={()=> props.navigation.navigate('PurchaseScreen')}>
             <View style={{ flexDirection: 'row', padding: 10 }}>
                 <View style={[styles.containerChild]}>
                     <Icon name="clipboard-text-outline" color={myColors.defaultPrimaryColor} style={styles.clipBoard} />
@@ -18,6 +20,8 @@ export default function AccountPurchases() {
                     <Text style={{ fontSize: 13, opacity: 0.8 }}>View Purchase History</Text>
                 </View>
             </View>
+            </TouchableOpacity>
+           
             <View style={styles.devider} />
             <View style={styles.icons}>
                 <View style={styles.containerIcon}>
