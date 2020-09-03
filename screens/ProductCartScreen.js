@@ -20,9 +20,7 @@ import ProductCartAppBar from "../components/ProductCartAppBar";
 
 import ProductCartItem from "../components/ProductCartItem";
 export default class ProductCartScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+ 
 
   constructor(props) {
     super(props);

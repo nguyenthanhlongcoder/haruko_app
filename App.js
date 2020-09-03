@@ -15,12 +15,12 @@ const Stack = createStackNavigator();
 export default function App() {
 
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator headerMode="none">
-    //   <Stack.Screen name="Main" component={MainTabStack}/>
-    // </Stack.Navigator>
-    // </NavigationContainer>
-    <ProductStack/>
+    <NavigationContainer>
+      <Stack.Navigator headerMode="none">
+      <Stack.Screen name="Main" component={MainTabStack}/>
+    </Stack.Navigator>
+    </NavigationContainer>
+   
     
     
   );

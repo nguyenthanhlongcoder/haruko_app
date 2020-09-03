@@ -6,7 +6,8 @@ import {
   ActivityIndicator,
   StatusBar,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from "react-native";
 import { myColors } from "../assets/myColors";
 import AppLoading from "expo";
@@ -31,7 +32,8 @@ export default class Product extends React.Component {
     
     if (assetsLoaded) {
       return (
-        <View style={styles.container} onTouchEnd={this.props.onPress}>
+        <TouchableOpacity onPress={this.props.onPress}>
+        <View style={styles.container}>
           <Image
             style={styles.img}
             source={{uri:this.props.item.image}}
@@ -62,6 +64,7 @@ export default class Product extends React.Component {
             </Text>
           </View>
         </View>
+        </TouchableOpacity>
       );
     } else {
       return (

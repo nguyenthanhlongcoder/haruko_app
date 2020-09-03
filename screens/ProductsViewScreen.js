@@ -30,9 +30,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export default class ProductsViewScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
 
   constructor() {
     super();
@@ -110,7 +107,6 @@ export default class ProductsViewScreen extends React.Component {
         {/* <Product img={require(image)} content={content}/> */}
         <SearchBar
           onPress={() => this.props.navigation.navigate("Third")}
-          onChatPress={() => this.props.navigation.navigate("Forth")}
         />
         <View
           onTouchEnd={() => {
@@ -167,7 +163,7 @@ export default class ProductsViewScreen extends React.Component {
             return (
               <Product
                 item={item}
-                onPress={() => this.props.navigation.navigate("Second", item)}
+                onPress={() => this.props.navigation.navigate("ProductDetailScreen", item)}
               />
             );
           }}

@@ -17,12 +17,11 @@ import { myColors } from "../assets/myColors";
 import ProductDetailAppBar from "../components/ProductDetailAppBar";
 
 export default class ProductDetailScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+  
   constructor(props) {
     super(props);
     this.state = {
+     item: item=this.props.route.params,
       conData: [
         {
           url: require("../assets/favicon.png"),
@@ -113,19 +112,12 @@ export default class ProductDetailScreen extends React.Component {
   };
   render() {
     const { navigation } = this.props;
-    const item = {
-      image: navigation.getParam("image", "NO-User"),
-      content: navigation.getParam("content", "NO-User"),
-      sale: navigation.getParam("sale", "NO-User"),
-      price: navigation.getParam("price", "NO-User"),
-      sold: navigation.getParam("sold", "NO-User"),
-       description:navigation.getParam("description", "NO-User"),
-    };
+   item=this.props.route.params
     return (
       <View style={styles.container}>
         <ProductDetailAppBar
-          onPress={() => this.props.navigation.navigate("Third")}
-          title={item.content}
+          onPress={() => this.props.navigation.navigate("ProductCartScreen")}
+          title={this.state.item.content}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ margin: 5 }}>
@@ -140,10 +132,10 @@ export default class ProductDetailScreen extends React.Component {
             />
           </View>
           <View>
-            <ProductTitle item={item} />
+            <ProductTitle item={this.state.item} />
           </View>
 
-          <ProductDetail item={item} />
+          <ProductDetail item={this.state.item} />
           <View style={styles.containerItem}>
             <Text style={styles.title}>Same</Text>
             <FlatList

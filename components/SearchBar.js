@@ -15,7 +15,7 @@ export default function SearchBar(props) {
         </View>
         <View style={styles.icons}>
           <Icon onPress={props.onChatPress} style={styles.icon} name="message1" color="#fff" />
-          <Icon onPress={props.onPress} style={styles.icon} name="shoppingcart" color="#fff" />
+          <Icon style={styles.icon} name="shoppingcart" color="#fff" />
         </View>
       </View>
     </View>
