@@ -11,6 +11,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/material-bottom-tabs": "^5.2.16",
+    "@react-navigation/material-top-tabs": "^5.2.16",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
     "expo": "^38.0.9",
@@ -29,13 +30,16 @@
     "react-native-maps": "0.27.1",
     "react-native-paper": "^4.0.1",
     "react-native-phone-call": "^1.0.9",
+    "react-native-reanimated": "~1.9.0",
     "react-native-screens": "^2.10.1",
     "react-native-slideshow": "^1.0.1",
     "react-native-snap-carousel": "^4.0.0-beta.6",
+    "react-native-tab-view": "^2.15.1",
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.0",
-    "react-navigation-stack": "^2.8.2"
+    "react-navigation-stack": "^2.8.2",
+    "reanimated": "0.0.1-alpha"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

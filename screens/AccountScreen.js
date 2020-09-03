@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaView, View,Text, Image, StyleSheet } from 'react-native';
 import AccountPurchases from '../components/AccountPurchases';
 import AccountHeader from '../components/AccountHeader';
 import AccountMyProduct from '../components/AccountMyProducts';
@@ -8,17 +8,17 @@ import {myColors} from '../assets/myColors';
 import AppBar from '../components/AppBar';
 import { Appbar } from 'react-native-paper';
 
-export default function AccountScreen() {
+export default function AccountScreen({navigation}) {
     return (
-        <View style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1,}}>
             <AppBar title=''/>
             <AccountHeader />
-            <AccountPurchases />
+            <AccountPurchases navigation={navigation} />
             <View style={styles.divider}/>
             <AccountMyProduct/>
             <View style={styles.divider}/>
             <AccountSetting/>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
     divider:{
         height: 10,
         backgroundColor: '#d5d5d5',
-        opacity: 0.3
+        opacity: 0.3,
     }
 })

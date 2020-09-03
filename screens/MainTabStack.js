@@ -1,13 +1,15 @@
 import React from 'react';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Platform} from 'react-native';
 import HomeScreen from './HomeScreen';
 import ProductsViewScreen from './ProductsViewScreen';
 import NotificationScreen from './NotificationScreen';
-import AccountScreen from './AccountScreen';
+import AccountScreenStack from './AccountScreenStack';
 import {myColors} from '../assets/myColors';
 import AntDesgin from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProductStack from '../screens/ProductStack';
+
 const Tab = createBottomTabNavigator();
 
 export default function MainTabStack(){
@@ -45,12 +47,14 @@ export default function MainTabStack(){
                 )
             }}/>
             <Tab.Screen 
-            name="AccountScreen" 
-            component={AccountScreen}
+            name="AccountScreenStack" 
+            component={AccountScreenStack}
             options={{
                 tabBarLabel: 'Account',
                 tabBarIcon:({color, size})=>(
-                    <Ionicons name="ios-person" color={color} size={size}/>
+                    Platform.OS === 'ios'?
+                    <Ionicons name="ios-person" color={color} size={size}/>:
+                    <Octicons name='person' color={color} size={size}/>
                 )
             }}/>
         </Tab.Navigator>
