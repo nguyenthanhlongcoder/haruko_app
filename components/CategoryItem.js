@@ -28,9 +28,9 @@ export default class CategoryItem extends React.Component {
     const { assetsLoaded } = this.state;
     if (assetsLoaded) {
       return (
-        <View style={styles.container}>
+        <View style={styles.container} onTouchEnd={this.props.onPress}>
           <Text style={styles.content}>
-            {this.props.item.content}
+            {this.props.item.Title}
           </Text>
         </View>
       );

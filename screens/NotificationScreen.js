@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import NotificationItem from '../components/NotificationItem';
 import { View, StyleSheet, FlatList } from 'react-native';
+import AppBar from '../components/AppBar';
+import { Appbar } from 'react-native-paper';
 
 export default function NotificationScreen() {
 
@@ -23,6 +25,7 @@ export default function NotificationScreen() {
 
     return (
         <View style={styles.container}>
+            <AppBar title='Notifications'/>
             <FlatList
                 data={data}
                 renderItem={({ item }) => { return <NotificationItem data={item} /> }}
@@ -36,6 +39,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: '#d5d5d5'
     },
 })

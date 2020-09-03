@@ -25,25 +25,25 @@ export default class ProductDetail extends React.Component {
   popupDetail() {
     if (this.state.containerHeight === 0) {
       this.setState({
-        containerHeight:100,
-        detailHeight:100,
+        containerHeight: 100,
+        detailHeight: 100,
         iconName: "up",
       });
     } else {
       this.setState({
         containerHeight: 0,
-        detailHeight:0,
+        detailHeight: 0,
         iconName: "down",
       });
     }
   }
   render() {
     return (
-      <View style={(styles.container)}>
+      <View style={styles.container}>
         <Text style={styles.title}>Detail</Text>
         <View style={styles.containerItem}>
           <MaterialCommunityIcons style={styles.icon} name="warehouse" />
-          <Text style={[styles.content, { flex: 1 }]}>Warehouse</Text>
+          <Text style={[styles.content, { flex: 1 }]}>Storage</Text>
           <Text style={styles.callNow}>1972</Text>
         </View>
         <View style={styles.divider} />
@@ -52,21 +52,34 @@ export default class ProductDetail extends React.Component {
           <FontEntypo style={styles.icon} name="app-store" />
           <Text style={[styles.content, { flex: 1 }]}>Trademark</Text>
 
-          <Text style={styles.callNow}>No Branch</Text>
-          <Icon style={{textAlign:'right',fontSize:25,opacity:.5}} name="right" />
+          <Text style={styles.callNow}>Haruko</Text>
+          <Icon
+            style={{ textAlign: "right", fontSize: 25, opacity: 0.5 }}
+            name="right"
+          />
         </View>
         <View style={styles.divider} />
 
         <View style={styles.containerItem}>
           <Icon style={styles.icon} name="mail" />
           <Text style={[styles.content, { flex: 1 }]}>From</Text>
-          <Text style={styles.callNow}>Đống Đa Hà Nội</Text>
+          <Text style={styles.callNow}>Haruko shop</Text>
         </View>
         <View style={styles.divider} />
-        <View style={styles.containerItem,{height:this.state.containerHeight,backgroundColor:'#fff'}}>
-          <Text style={{textAlign:"justify",height:this.state.detailHeight,position:"relative"}}>
-            Đống Đa Hà Nội
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <View
+          style={
+            (styles.containerItem,
+            { height: this.state.containerHeight, backgroundColor: "#fff" })
+          }
+        >
+          <Text
+            style={{
+              textAlign: "justify",
+              height: this.state.detailHeight,
+              position: "relative",
+            }}
+          >
+            {this.props.item.description}
           </Text>
         </View>
         <View
@@ -99,7 +112,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 2,
-  
   },
   title: {
     fontSize: 20,
@@ -129,6 +141,5 @@ const styles = StyleSheet.create({
   divider: {
     height: 2,
     backgroundColor: myColors.dividerColor,
-    
   },
 });

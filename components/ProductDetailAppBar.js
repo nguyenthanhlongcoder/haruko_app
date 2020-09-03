@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { myColors } from '../assets/myColors';
 
-export default function AppBar(props) {
+export default function ProductDetailAppBar(props) {
     return (
         <View style={styles.container}>
             <View style={{flex: 1}}/>
@@ -14,7 +14,7 @@ export default function AppBar(props) {
             </View>
             <View style={styles.icons}>
                 <Icon style={styles.icon} name="message1" color='#fff' />
-                <Icon style={styles.icon} name="shoppingcart" color='#fff' />
+                <Icon onPress={props.onPress} style={styles.icon} name="shoppingcart" color='#fff' />
             </View>
             </View>
             

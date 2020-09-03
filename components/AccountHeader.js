@@ -21,7 +21,7 @@ export default function AccountHeader(){
 const styles = StyleSheet.create({
     container:{
         backgroundColor: myColors.defaultPrimaryColor,
-        height: 100,
+        height: 50,
         flexDirection: 'column-reverse',
         padding: 15
     },

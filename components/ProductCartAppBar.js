@@ -3,19 +3,18 @@ import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { myColors } from '../assets/myColors';
 
-export default function AppBar(props) {
+export default function ProductCartAppBar(props) {
     return (
         <View style={styles.container}>
-            <View style={{flex: 1}}/>
+             <View style={styles.icons}>
+                <Icon style={styles.icon} name="close" color='#fff' />
+            </View>
             <View style={{flex: 1, flexDirection: "row",
         alignItems: "center",}}>
                 <View style={{ flex: 1 }}>
                 <Text style={styles.header}>{props.title}</Text>
             </View>
-            <View style={styles.icons}>
-                <Icon style={styles.icon} name="message1" color='#fff' />
-                <Icon style={styles.icon} name="shoppingcart" color='#fff' />
-            </View>
+           
             </View>
             
         </View>

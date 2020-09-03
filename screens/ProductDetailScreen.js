@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   Image,
+  Button,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import ProductTitle from "../components/ProductTitle";
@@ -13,9 +14,11 @@ import ProductDetail from "../components/ProductDetail";
 import Product from "../components/Product";
 import AppBottomNavigation from "../components/AppBottomNavigation";
 import { myColors } from "../assets/myColors";
+import ProductDetailAppBar from "../components/ProductDetailAppBar";
+
 export default class ProductDetailScreen extends React.Component {
   static navigationOptions = {
-    title: "SecondActivity",
+    headerShown: false,
   };
   constructor(props) {
     super(props);
@@ -116,9 +119,14 @@ export default class ProductDetailScreen extends React.Component {
       sale: navigation.getParam("sale", "NO-User"),
       price: navigation.getParam("price", "NO-User"),
       sold: navigation.getParam("sold", "NO-User"),
+       description:navigation.getParam("description", "NO-User"),
     };
     return (
       <View style={styles.container}>
+        <ProductDetailAppBar
+          onPress={() => this.props.navigation.navigate("Third")}
+          title={item.content}
+        />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ margin: 5 }}>
             <Carousel
@@ -135,8 +143,8 @@ export default class ProductDetailScreen extends React.Component {
             <ProductTitle item={item} />
           </View>
 
-          <ProductDetail />
-          <View style={styles.containerItem} >
+          <ProductDetail item={item} />
+          <View style={styles.containerItem}>
             <Text style={styles.title}>Same</Text>
             <FlatList
               data={this.state.conData}
@@ -148,6 +156,8 @@ export default class ProductDetailScreen extends React.Component {
             />
           </View>
         </ScrollView>
+
+        <Button title="Add to Cart" />
       </View>
     );
   }
@@ -157,13 +167,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: myColors.dividerColor,
-    flexDirection: "row",
+    flexDirection: "column",
   },
   containerItem: {
     flexDirection: "column",
     marginVertical: 8,
-    backgroundColor:'#fff'
-    
+    backgroundColor: "#fff",
   },
   title: {
     fontSize: 20,
