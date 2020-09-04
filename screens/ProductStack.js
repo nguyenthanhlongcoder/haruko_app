@@ -6,6 +6,8 @@ import ProductDetailScreen from "../screens/ProductDetailScreen";
 import ProductsViewScreen from "../screens/ProductsViewScreen";
 import ProductCartScreen from "../screens/ProductCartScreen";
 import ChatScreen from "../screens/ChatScreen";
+import LoginScreenStack from './LoginScreenStack';
+
 const Stack=createStackNavigator()
 export default function ProductStack({navigation, route}){
   if (route.state && route.state.index > 0) {
@@ -18,6 +20,7 @@ export default function ProductStack({navigation, route}){
       <Stack.Screen name='ProductsViewScreen' component={ProductsViewScreen}/>
       <Stack.Screen name='ProductDetailScreen' component={ProductDetailScreen}/>
       <Stack.Screen name='ProductCartScreen' component={ProductCartScreen}/>
+      <Stack.Screen name='LoginScreen' component={LoginScreenStack}/>
     </Stack.Navigator>
   )
 

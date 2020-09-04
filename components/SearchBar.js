@@ -1,5 +1,5 @@
-import React ,{ useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import { myColors } from "../assets/myColors";
 
@@ -10,18 +10,23 @@ export default function SearchBar(props) {
       <View style={{ flex: 1 }} />
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={styles.inputGroup}>
-        <Icon name="search1" color='#999999' style={styles.searchIcon}/>
+          <Icon name="search1" color='#999999' style={styles.searchIcon} />
           <TextInput style={styles.input}
-          placeholder='Search hear ...'
-          onChangeText={text =>{ setText(text);
-          props.onSearch(text)
-          }}
-        defaultValue={text} />
+            placeholder='Search here ...'
+            onChangeText={text => {
+              setText(text);
+              props.onSearch(text)
+            }}
+            defaultValue={text} />
         </View>
         <View style={styles.icons}>
-          <Icon style={styles.icon} name="shoppingcart" color="#fff" />
+          <TouchableOpacity onPress={()=>props.navigation.navigate('LoginScreen')}>
           <Icon onPress={props.onChatPress} style={styles.icon} name="message1" color="#fff" />
 
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>props.navigation.navigate('LoginScreen')}>
+          <Icon style={styles.icon} name="shoppingcart" color="#fff" />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -52,8 +57,8 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: "#fff",
     height: 40,
-    height:'100%',
-    paddingLeft:6,
+    height: '100%',
+    paddingLeft: 6,
   },
   inputGroup: {
     flex: 2,
@@ -62,11 +67,11 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     backgroundColor: "#fff",
     alignItems: 'center',
-    position:'absolute',
+    position: 'absolute',
     flexDirection: "row",
     borderRadius: 2
   },
-  searchIcon:{
+  searchIcon: {
     fontSize: 25,
   }
 });

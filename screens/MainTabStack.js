@@ -1,9 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Platform} from 'react-native';
-import HomeScreen from './HomeScreen';
-import ProductsViewScreen from './ProductsViewScreen';
-import NotificationScreen from './NotificationScreen';
+import HomeScreenStack from './HomeScreenStack';
+import NotificationScreenStack from './NotificationScreenStack';
 import AccountScreenStack from './AccountScreenStack';
 import {myColors} from '../assets/myColors';
 import AntDesgin from 'react-native-vector-icons/AntDesign';
@@ -21,7 +20,7 @@ export default function MainTabStack(){
             activeTintColor: myColors.defaultPrimaryColor
         }}>
             <Tab.Screen name="Home" 
-            component={HomeScreen}
+            component={HomeScreenStack}
             options={{
                 tabBarLabel: 'Home',
                 tabBarIcon: ({color, size})=>(
@@ -39,7 +38,7 @@ export default function MainTabStack(){
             }}/>
             <Tab.Screen 
             name="Notification" 
-            component={NotificationScreen}
+            component={NotificationScreenStack}
             options={{
                 tabBarLabel:'Notification',
                 tabBarIcon:({color, size})=>(
