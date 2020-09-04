@@ -62,7 +62,7 @@ export default class ProductCartItem extends React.Component {
           <View style={{ flexDirection: "row" }}>
             <View style={styles.containerItemChild}>
               <Icon
-                onPress={() => this.changCount("minus")}
+                onPress={() =>  this.props.getTotal(this.props.item,this.props.index,'minus')}
                 style={[
                   styles.icon,
                   styles.icons,
@@ -71,10 +71,10 @@ export default class ProductCartItem extends React.Component {
                 name="minus"
               ></Icon>
               <Text style={[styles.icon, { fontSize: 20 }]}>
-                {this.state.count}
+                {this.props.item.count}
               </Text>
               <Icon
-                onPress={() => this.changCount("plus")}
+                onPress={() =>  this.props.getTotal(this.props.item,this.props.index,'plus')}
                 style={[styles.icon, styles.icons]}
                 name="plus"
               ></Icon>

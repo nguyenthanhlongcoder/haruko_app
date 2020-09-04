@@ -65,6 +65,7 @@ export default class ProductsViewScreen extends React.Component {
           product.price = element.val().Price;
           product.description = element.val().Description;
           product.avatar = element.val().Avatar;
+          product.category = element.val().Category;
 
           Productlist.push(product);
         });
@@ -108,6 +109,7 @@ export default class ProductsViewScreen extends React.Component {
             product.price = element.val().Price;
             product.description = element.val().Description;
             product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
             Productlist.push(product);
           
           }
@@ -116,6 +118,7 @@ export default class ProductsViewScreen extends React.Component {
             product.price = element.val().Price;
             product.description = element.val().Description;
             product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
             Productlist.push(product);
           }
         });
@@ -144,6 +147,7 @@ search=(inputText)=>{
             product.price = element.val().Price;
             product.description = element.val().Description;
             product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
             Productlist.push(product);
           
           }

@@ -20,15 +20,13 @@ import ProductCartAppBar from "../components/ProductCartAppBar";
 
 import ProductCartItem from "../components/ProductCartItem";
 export default class ProductCartScreen extends React.Component {
- 
-
   constructor(props) {
     super(props);
     this.state = {
       product: [
         {
           content: "",
-          price: "",
+          price: "3",
           count: "2",
           img: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
         },
@@ -39,61 +37,75 @@ export default class ProductCartScreen extends React.Component {
           img: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
         },
       ],
-      total: "",
+      total:0,
       getTotal: this.getTotal.bind(this),
       countPro: [],
     };
   }
 
-  componentDidMount() {}
-  getTotal = (val) => {
-    this.state.total = val;
-
-    this.setState({
-      total: val,
+  componentDidMount() {
+    let total=0
+    this.state.product.forEach(element => {
+      total=total+element.count*element.price
     });
-    let hh = [];
-    hh.push(this.state.total);
-    this.state.countPro.push(this.state.count);
-    this.setState({
-      countPro: this.state.countPro,
-    });
-    console.log(hh);
+    this.state.total=total;
+    this.setState({total:this.state.total});
+   
+  }
+  getTotal = (item, index, style) => {
+    if (style === "minus") {
+      if (this.state.product[index].count > 1) {
+        this.state.product[index].count =
+          parseInt(this.state.product[index].count) - 1;
+      }
+    } else {
+      this.state.product[index].count =
+        parseInt(this.state.product[index].count) + 1;
+    }
+    this.setState({ product: this.state.product });
+    this.componentDidMount()
   };
-
+  removeItem = (item, ind) => {
+    this.state.product.splice(ind, 1);
+    this.setState({ product: this.state.product });
+    this.componentDidMount()
+  };
   render() {
     return (
       <View style={styles.container}>
         <ProductCartAppBar />
-        <View style={{ flex: 1 }}>
-          <FlatList
-            data={this.state.product}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => {
-              return (
-                <ProductCartItem
-                  item={item}
-                  onClosePress={(item) => {
-                    const filteredData = this.state.product.filter(
-                      (item) => item !== item
-                    );
-                    this.setState({ product: filteredData });
-                  }}
-                  getTotal={this.getTotal}
-                />
-              );
-            }}
-          />
-          <TouchableHighlight
-            underlayColor="#00EEFF"
-            style={styles.btn}
-            onPress={() => {
-              console.log(this.state.count);
-            }}
-          >
-            <Text style={styles.text}>Buy Now</Text>
-          </TouchableHighlight>
-        </View>
+        <ScrollView>
+          <View>
+            <FlatList
+              data={this.state.product}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <ProductCartItem
+                    item={item}
+                    index={index}
+                    onClosePress={() => this.removeItem(item, index)}
+                    getTotal={this.getTotal}
+                  />
+                );
+              }}
+            />
+          </View>
+          <View style={styles.total}>
+            <Text style={styles.totalContent}>{this.state.total}
+            <Text>đ</Text>
+            </Text>
+          </View>
+        </ScrollView>
+        <TouchableHighlight
+          underlayColor="#00EEFF"
+          style={styles.btn}
+          onPress={() => {
+            console.log(this.state.count);
+          }}
+        >
+          <Text style={styles.text}>Buy Now</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -117,4 +129,16 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     height: 50,
   },
+  totalContent: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 20,
+    color:myColors.textPrimaryColor
+     },
+     total: {
+      width: Dimensions.get("window").width,
+      backgroundColor: "red",
+      height:Dimensions.get("window").width/10,
+ 
+      },
 });
