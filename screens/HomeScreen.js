@@ -7,11 +7,11 @@ import HomeMap from '../components/HomeMap';
 import { myColors } from '../assets/myColors';
 import AppBar from '../components/AppBar';
 import MyStatusBar from '../components/MyStatusBar'
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <MyStatusBar/>
-            <AppBar title='Home'/>
+            <AppBar title='Home' navigation={navigation}/>
             <ScrollView>
                 <HomeCarousel style={styles.carousel} />
                 <HomeAbout />

@@ -16,7 +16,7 @@ import SearchBar from "../components/SearchBar";
 import MyStatusBar from "../components/MyStatusBar";
 import { firebaseApp } from "../components/FirebaseConfig";
 import Icon from "react-native-vector-icons/Foundation";
-import { element } from "prop-types";
+import * as Animatable from 'react-native-animatable';
 
 export default class ProductsViewScreen extends React.Component {
   constructor() {
@@ -88,7 +88,6 @@ export default class ProductsViewScreen extends React.Component {
       data: this.state.data,
     });
 
-    console.log(this.state.data[ind].isChecked);
     firebaseApp
       .database()
       .ref("/Shop/")
@@ -160,7 +159,7 @@ search=(inputText)=>{
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <SearchBar onSearch={this.search} onPress={() => this.props.navigation.navigate("Third")} />
+        <SearchBar onSearch={this.search} navigation={this.props.navigation}/>
         <View
           onTouchEnd={() => {
             if (

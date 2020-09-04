@@ -13,7 +13,7 @@ export default function AccountScreen({ navigation }) {
     return (
         <SafeAreaView style={{ flex: 1, }}>
             <ScrollView>
-                <AppBar title='' />
+                <AppBar title='' navigation={navigation}/>
                 <AccountHeader />
                 <AccountPurchases navigation={navigation} />
                 <View style={styles.divider} />

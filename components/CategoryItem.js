@@ -25,7 +25,6 @@ export default class CategoryItem extends React.Component {
   }
   render() {
     const { assetsLoaded } = this.state;
-    console.log(this.props)
     if (assetsLoaded) {
       return (
         <View style={[styles.container,this.props.item.isChecked?styles.active: null]} onTouchEnd={this.props.onPress}>
