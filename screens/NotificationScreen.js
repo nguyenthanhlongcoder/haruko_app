@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet, FlatList ,} from 'react-native';
 import AppBar from '../components/AppBar';
 import MyStatusBar from '../components/MyStatusBar';
 
-export default function NotificationScreen() {
+export default function NotificationScreen({navigation}) {
 
     const [data, setData] = useState([{
         title: 'This is title',
@@ -26,7 +26,7 @@ export default function NotificationScreen() {
     return (
         <SafeAreaView style={styles.container}>
 
-            <AppBar title='Notifications'/>
+            <AppBar title='Notifications' navigation={navigation}/>
             <FlatList
                 contentContainerStyle={{ justifyContent: "center",
                 alignItems: "center",}}
