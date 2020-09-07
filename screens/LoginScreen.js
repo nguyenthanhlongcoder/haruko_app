@@ -32,6 +32,7 @@ export default function LoginScreen({ navigation }) {
  const storeToken= async (user)=> {
     try {
        await AsyncStorage.setItem("userData", JSON.stringify(user));
+       await AsyncStorage.setItem("status", true);
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -40,7 +41,7 @@ export default function LoginScreen({ navigation }) {
     try {
       let userData = await AsyncStorage.getItem("userData");
       let data = JSON.parse(userData);
-      console.log(JSON.parse(data).Cart);
+      
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -56,8 +57,6 @@ export default function LoginScreen({ navigation }) {
       .on("value", (snap) => {
         snap.forEach((element) => {
           if (element.val().Password === data.password) {
-           
-           element['key']=element.key;
            storeToken(JSON.stringify(element));
             navigation.goBack();
             

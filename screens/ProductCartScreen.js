@@ -102,30 +102,10 @@ export default class ProductCartScreen extends React.Component {
     this.setState({ product: this.state.product });
 
     this.setTotal();
-    var ListC=[];
-    this.state.product.forEach(elm=>{
-       var product={
-       Title:'',
-       Quantity:'',
-       Avatar:'',
-       Price:'',
-      
-       }
-       product.Title=elm.content,
-       product.Quantity=elm.count,
-       product.Price=elm.price,
-       product.Avatar=elm.img,
-       ListC.push(product);
-    });
-    firebaseApp
-      .database()
-      .ref("/User/"+keyUser+'/Cart/')
-     .push(ListC)
    
+  
   }
-  componentWillUnmount=()=>{
-   
-  }
+  
   removeItem = (item, ind) => {
     this.state.product.splice(ind, 1);
     this.setState({ product: this.state.product });
@@ -203,32 +183,19 @@ return keyUser
     });
   
           var date= new Date();
+          var Total= this.state.total
           var DateTime=date.getFullYear()+'-'+date.getMonth() + 1;
           var order={
-            date:DateTime
+            date:DateTime,
+            Total:Total
          }
-          var DateTime=date.getFullYear()+'-'+date.getMonth() + 1;
+          var DateTime=date.getFullYear()+'-'+date.getMonth() + 1+"-"+date.getDay();
            var key=  firebaseApp
            .database()
            .ref("/User/"+keyUser+"/Order/").ref.push(order).key;
            firebaseApp
            .database()
-           .ref("/User/"+keyUser+"/Order/"+key+'/').ref.update(ListC);
-            
-            
-  //        dat.forEach(e=>{
-  //         var date= new Date()
-  //         
-  //        var order={
-  //          date:DateTime
-  //        }
-
-  //      var key= e.ref.child('/Order/').push(order).key
-  //       e.ref.child('Order/'+key).update(this.state.product)
-  //        var total=this.state.total;
-  //        e.ref.child('Order/'+key+'/Total').set(total);
-  //        e.ref.child('Cart/'+item.content).remove();
-  //        })
+           .ref("/User/"+keyUser+"/Order/"+key+'/').ref.update(ListC)
        
        
        }

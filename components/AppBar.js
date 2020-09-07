@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { myColors } from '../assets/myColors';
 import { Appbar } from 'react-native-paper';
@@ -12,10 +12,19 @@ export default function AppBar(props, {navigation}) {
                 <Text style={styles.header}>{props.title}</Text>
             </View>
             <View style={styles.icons}>
-                <TouchableOpacity onPress={() => props.navigation.navigate('LoginScreen')}>
+                <TouchableOpacity onPress={() =>{ props.navigation.navigate('LoginScreen')}}>
                     <Icon style={styles.icon} name="message1" color='#fff' />
                 </TouchableOpacity>
-                <TouchableOpacity  onPress={() => props.navigation.navigate('LoginScreen')}>
+                <TouchableOpacity  onPress={async() => {
+                     let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus===false){
+                    props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                        props.navigation.navigate('ProductCartScreen')
+                    }
+                    }}>
                 <Icon style={styles.icon} name="shoppingcart" color='#fff' />
                 </TouchableOpacity>
             </View>
