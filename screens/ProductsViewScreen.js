@@ -16,7 +16,7 @@ import SearchBar from "../components/SearchBar";
 import MyStatusBar from "../components/MyStatusBar";
 import { firebaseApp } from "../components/FirebaseConfig";
 import Icon from "react-native-vector-icons/Foundation";
-import * as Animatable from 'react-native-animatable';
+import { element } from "prop-types";
 
 export default class ProductsViewScreen extends React.Component {
   constructor() {
@@ -25,9 +25,11 @@ export default class ProductsViewScreen extends React.Component {
       iconName: "right",
       cateListHeight: 0,
       cateGory: [],
+     
     };
   }
   componentDidMount() {
+    console.log( this.props)
     this.defaultLoadData();
   }
   defaultLoadData = () => {
@@ -59,18 +61,21 @@ export default class ProductsViewScreen extends React.Component {
             sold: 8,
             category: "",
             description: "",
+         
           };
 
           product.content = element.val().Title;
           product.price = element.val().Price;
           product.description = element.val().Description;
           product.avatar = element.val().Avatar;
-
+          product.category = element.val().Category;
           Productlist.push(product);
         });
 
         this.setState({ data: catelist, product: Productlist });
+        
       });
+      console.log(this.state.product)
   };
   onCateItemPress = (item, ind) => {
     var Productlist = [];
@@ -87,6 +92,7 @@ export default class ProductsViewScreen extends React.Component {
       data: this.state.data,
     });
 
+    console.log(this.state.data[ind].isChecked);
     firebaseApp
       .database()
       .ref("/Shop/")
@@ -100,13 +106,16 @@ export default class ProductsViewScreen extends React.Component {
             sold: 8,
             category: "",
             description: "",
-            avatar:''
+            avatar:'',
+          
           };
           if (element.val().Category === item.Title) {
             product.content = element.val().Title;
             product.price = element.val().Price;
             product.description = element.val().Description;
             product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
+            
             Productlist.push(product);
           
           }
@@ -115,6 +124,8 @@ export default class ProductsViewScreen extends React.Component {
             product.price = element.val().Price;
             product.description = element.val().Description;
             product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
+           
             Productlist.push(product);
           }
         });
@@ -136,13 +147,16 @@ search=(inputText)=>{
             sold: 8,
             category: "",
             description: "",
-            avatar:''
+            avatar:'',
+           
           };
           if (element.val().Title.toUpperCase().search(inputText.toUpperCase())!=-1) {
             product.content = element.val().Title;
             product.price = element.val().Price;
             product.description = element.val().Description;
             product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
+           
             Productlist.push(product);
           
           }
@@ -155,7 +169,7 @@ search=(inputText)=>{
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <SearchBar onSearch={this.search} navigation={this.props.navigation}/>
+        <SearchBar onSearch={this.search} onPress={() => this.props.navigation.navigate("LoginScreen")} />
         <View
           onTouchEnd={() => {
             if (
@@ -223,8 +237,12 @@ search=(inputText)=>{
             return (
               <Product
                 item={item}
+                
                 onPress={() =>
+                {
                   this.props.navigation.navigate("ProductDetailScreen", item)
+                 
+                  }
                 }
               />
             );

@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { myColors } from "../assets/myColors";
 import { render } from "react-dom";
 
-export default class ProductCartItem extends React.Component {
+export default class PurchaseItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +40,7 @@ export default class ProductCartItem extends React.Component {
         </View>
         <View style={styles.containerItem}>
           <View style={styles.containerItemChild}>
-            <Text style={styles.content}>{this.props.item.content}</Text>
+            <Text style={styles.content}>{this.props.item.key}</Text>
             <Icon
               onPress={this.props.onClosePress}
               style={styles.icon}
@@ -50,40 +50,39 @@ export default class ProductCartItem extends React.Component {
 
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.pro]}>
-              Provided by Haruko shop
+            {this.props.item.date}
             </Text>
           </View>
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.text1]}>
-              {this.props.item.price}
+              {this.props.item.Total}
               <Text>đ</Text>
             </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.containerItemChild}>
               <Icon
-                onPress={() =>  this.props.getTotal(this.props.item,this.props.index,'minus')}
                 style={[
                   styles.icon,
                   styles.icons,
                   { opacity: this.state.opacity },
                 ]}
-                name="minus"
+              
               ></Icon>
               <Text style={[styles.icon, { fontSize: 20 }]}>
                 {this.props.item.count}
               </Text>
               <Icon
-                onPress={() =>  this.props.getTotal(this.props.item,this.props.index,'plus')}
+                
                 style={[styles.icon, styles.icons]}
-                name="plus"
+               
               ></Icon>
             </View>
             <View style={(styles.containerItemChild, { width: "50%" })}>
               <Text
                 style={[{ textAlign: "right", fontSize: 15 }, styles.text1]}
               >
-                Buy late
+               
               </Text>
             </View>
           </View>

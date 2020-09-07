@@ -60,7 +60,7 @@ export default class Product extends React.Component {
                   {this.props.item.price}
                 </Text>
                 <Text>
-                  {this.props.item.sold} sold
+                 
             </Text>
               </View>
             </View>

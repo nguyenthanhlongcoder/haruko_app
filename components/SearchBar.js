@@ -24,7 +24,7 @@ export default function SearchBar(props) {
           <Icon onPress={props.onChatPress} style={styles.icon} name="message1" color="#fff" />
 
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>props.navigation.navigate('LoginScreen')}>
+          <TouchableOpacity onPress={props.onPress}>
           <Icon style={styles.icon} name="shoppingcart" color="#fff" />
           </TouchableOpacity>
         </View>

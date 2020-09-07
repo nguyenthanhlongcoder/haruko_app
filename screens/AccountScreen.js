@@ -4,6 +4,7 @@ import AccountPurchases from '../components/AccountPurchases';
 import AccountHeader from '../components/AccountHeader';
 import AccountMyProduct from '../components/AccountMyProducts';
 import AccountSetting from '../components/AccountSetting';
+import AccountLogout from '../components/AccountLogout';
 import { myColors } from '../assets/myColors';
 import AppBar from '../components/AppBar';
 import { Appbar } from 'react-native-paper';
@@ -20,6 +21,8 @@ export default function AccountScreen({ navigation }) {
                 <AccountMyProduct navigation={navigation}/>
                 <View style={styles.divider} />
                 <AccountSetting />
+                <View style={styles.divider} />
+                <AccountLogout/>
             </ScrollView>
         </SafeAreaView>
     )
