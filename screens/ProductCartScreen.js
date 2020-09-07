@@ -11,48 +11,85 @@ import {
   ListView,
   Dimensions,
   TouchableHighlight,
+  AsyncStorage,
 } from "react-native";
 import Product from "../components/Product";
 import CategoryItem from "../components/CategoryItem";
 import { myColors } from "../assets/myColors";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
 import ProductCartAppBar from "../components/ProductCartAppBar";
-
+import { firebaseApp } from "../components/FirebaseConfig";
 import ProductCartItem from "../components/ProductCartItem";
+import { element } from "prop-types";
+import { database } from "firebase";
+import { List } from "react-native-paper";
 export default class ProductCartScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: [
-        {
-          content: "",
-          price: "3",
-          count: "2",
-          img: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-        },
-        {
-          content: "b",
-          price: "5",
-          count: "9",
-          img: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-        },
-      ],
+      product: [],
       total:0,
       getTotal: this.getTotal.bind(this),
       countPro: [],
+      email:'',
+      password:'',
+    
     };
   }
-
-  componentDidMount() {
-    let total=0
-    this.state.product.forEach(element => {
-      total=total+element.count*element.price
-    });
-    this.state.total=total;
-    this.setState({total:this.state.total});
+  defaultLoadData = async() => {
    
+    this.state.product=[]
+    var keyUser=await this.getUsKey();
+    var list=[]
+    firebaseApp
+      .database()
+      .ref("/User/"+keyUser+'/Cart/')
+     .on('value',data=>{
+        data.forEach(e=>{
+          var pro={
+            content:'',
+            price:'',
+            count:'',
+            img: "",
+
+          }
+          pro.content=e.val().Title;
+          pro.count=e.val().Quantity;
+          pro.price=e.val().Price;
+          pro.img=e.val().Avatar;
+          this.state.product.push(pro);
+
+        })
+        this.setState({product:this.state.product})
+        this.setTotal();
+       }
+     );
+   
+    
+  };
+  getToken=async (user)=> {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      var us= JSON.parse(data);
+      this.state.email=us.Email
+     this.setState({email:this.state.email})
+     this.state.password=us.Password;
+     this.setState({password:this.state.password})
+       
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
   }
-  getTotal = (item, index, style) => {
+  componentDidMount= async()=> {
+  
+   await this.getToken();
+  await this.defaultLoadData();
+   this.setTotal()
+  }
+  getTotal = async (item, index, style) => {
+    var keyUser= await this.getUsKey()
+    this.defaultLoadData();
     if (style === "minus") {
       if (this.state.product[index].count > 1) {
         this.state.product[index].count =
@@ -63,13 +100,139 @@ export default class ProductCartScreen extends React.Component {
         parseInt(this.state.product[index].count) + 1;
     }
     this.setState({ product: this.state.product });
-    this.componentDidMount()
-  };
+
+    this.setTotal();
+    var ListC=[];
+    this.state.product.forEach(elm=>{
+       var product={
+       Title:'',
+       Quantity:'',
+       Avatar:'',
+       Price:'',
+      
+       }
+       product.Title=elm.content,
+       product.Quantity=elm.count,
+       product.Price=elm.price,
+       product.Avatar=elm.img,
+       ListC.push(product);
+    });
+    firebaseApp
+      .database()
+      .ref("/User/"+keyUser+'/Cart/')
+     .push(ListC)
+   
+  }
+  componentWillUnmount=()=>{
+   
+  }
   removeItem = (item, ind) => {
     this.state.product.splice(ind, 1);
     this.setState({ product: this.state.product });
-    this.componentDidMount()
-  };
+    firebaseApp
+    .database()
+    .ref("/User/")
+    .orderByChild("Email")
+    .equalTo(this.state.email)
+    .on("value", (snap) => {
+     snap.ref.orderByChild('Password').equalTo(this.state.password).on
+     ("value",dat=>
+       { 
+          dat.ref.child('Cart/'+item.content).remove();
+       }
+     )
+  });
+    this.setTotal();
+  }
+ setTotal() {
+    let total=0
+    this.state.product.forEach(element => {
+      total=total+element.count*element.price
+    });
+    this.state.total=total;
+    this.setState({total:this.state.total});
+    
+  } 
+  getUsKey=async ()=>{
+    var keyUser=''
+    await  firebaseApp
+      .database()
+      .ref("/User/")
+      .orderByChild("Email")
+      .equalTo(this.state.email)
+      .on("value", (snap) => {
+        snap.forEach((element) => {
+          if (element.val().Password === this.state.password) {
+            keyUser=element.key;
+         }
+        });
+      });
+return keyUser
+  }
+  getCartList= async()=>
+  {
+    var keyUser=await this.getUsKey();
+    var list=[]
+    firebaseApp
+      .database()
+      .ref("/User/"+keyUser+'/Cart/')
+     .on('value',data=>{
+        data.forEach(e=>{
+            list.push(e)
+
+        })
+     })
+     return list
+  }
+  createOrder= async()=>{
+    var keyUser=await this.getUsKey();
+    var ListC=[];
+    this.state.product.forEach(elm=>{
+       var product={
+       Title:'',
+       Quantity:'',
+       Avatar:'',
+       Price:'',
+      
+       }
+       product.Title=elm.content,
+       product.Quantity=elm.count,
+       product.Price=elm.price,
+       product.Avatar=elm.img,
+       ListC.push(product);
+    });
+  
+          var date= new Date();
+          var DateTime=date.getFullYear()+'-'+date.getMonth() + 1;
+          var order={
+            date:DateTime
+         }
+          var DateTime=date.getFullYear()+'-'+date.getMonth() + 1;
+           var key=  firebaseApp
+           .database()
+           .ref("/User/"+keyUser+"/Order/").ref.push(order).key;
+           firebaseApp
+           .database()
+           .ref("/User/"+keyUser+"/Order/"+key+'/').ref.update(ListC);
+            
+            
+  //        dat.forEach(e=>{
+  //         var date= new Date()
+  //         
+  //        var order={
+  //          date:DateTime
+  //        }
+
+  //      var key= e.ref.child('/Order/').push(order).key
+  //       e.ref.child('Order/'+key).update(this.state.product)
+  //        var total=this.state.total;
+  //        e.ref.child('Order/'+key+'/Total').set(total);
+  //        e.ref.child('Cart/'+item.content).remove();
+  //        })
+       
+       
+       }
+ 
   render() {
     return (
       <View style={styles.container}>
@@ -101,7 +264,7 @@ export default class ProductCartScreen extends React.Component {
           underlayColor="#00EEFF"
           style={styles.btn}
           onPress={() => {
-            console.log(this.state.count);
+           this.createOrder();
           }}
         >
           <Text style={styles.text}>Buy Now</Text>
