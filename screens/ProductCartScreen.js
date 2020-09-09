@@ -12,6 +12,7 @@ import {
   Dimensions,
   TouchableHighlight,
   AsyncStorage,
+  Alert
 } from "react-native";
 import Product from "../components/Product";
 import CategoryItem from "../components/CategoryItem";
@@ -81,6 +82,20 @@ export default class ProductCartScreen extends React.Component {
       console.log("Something went wrong", error);
     }
   }
+  getToken=async (user)=> {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      var us= JSON.parse(data);
+      this.state.email=us.Email
+     this.setState({email:this.state.email})
+     this.state.password=us.Password;
+     this.setState({password:this.state.password})
+       
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
   componentDidMount= async()=> {
   
    await this.getToken();
@@ -88,41 +103,51 @@ export default class ProductCartScreen extends React.Component {
    this.setTotal()
   }
   getTotal = async (item, index, style) => {
-    var keyUser= await this.getUsKey()
-    this.defaultLoadData();
-    if (style === "minus") {
-      if (this.state.product[index].count > 1) {
-        this.state.product[index].count =
-          parseInt(this.state.product[index].count) - 1;
-      }
-    } else {
-      this.state.product[index].count =
-        parseInt(this.state.product[index].count) + 1;
+    
+    if(style==='plus')
+    {
+   
+   this.state.product[index].count=this.state.product[index].count+1
+   this.setState({product:this.state.product})
     }
-    this.setState({ product: this.state.product });
-
-    this.setTotal();
+    else{
+      if(this.state.product[index].count>=1)
+      {this.state.product[index].count=this.state.product[index].count-1
+      this.setState({product:this.state.product})}
+    }
+    var keyUser=await this.getUsKey();
+    var listPro=[]
+    this.state.product.forEach(e=>{
+      var pro={
+      Title:'',
+      Quantity:'',
+      Price:'',
+      Avatar:''
+    }
+    pro.Title=e.content;
+    pro.Quantity=e.count;
+    pro.Price=e.price;
+    pro.Avatar=e.img;
+    listPro.push(pro)
+    
+    })
+    this.state.product=[]
+  await  firebaseApp
+    .database()
+    .ref("/User/"+keyUser+"/Cart/"+item.content+'/'+'Quantity').set(listPro[index].Quantity)
    
   
   }
   
-  removeItem = (item, ind) => {
-    this.state.product.splice(ind, 1);
-    this.setState({ product: this.state.product });
-    firebaseApp
+  removeItem = async(item, ind) => {
+    var keyUser=await this.getUsKey();
+    if (typeof(keyUser)!== 'undefined'){
+    await  firebaseApp
     .database()
-    .ref("/User/")
-    .orderByChild("Email")
-    .equalTo(this.state.email)
-    .on("value", (snap) => {
-     snap.ref.orderByChild('Password').equalTo(this.state.password).on
-     ("value",dat=>
-       { 
-          dat.ref.child('Cart/'+item.content).remove();
-       }
-     )
-  });
+    .ref("/User/"+keyUser+"/Cart/"+item.content).remove()
+this.defaultLoadData()
     this.setTotal();
+  }
   }
  setTotal() {
     let total=0
@@ -152,7 +177,10 @@ return keyUser
   getCartList= async()=>
   {
     var keyUser=await this.getUsKey();
+    
     var list=[]
+    if(keyUser!=null)
+    {
     firebaseApp
       .database()
       .ref("/User/"+keyUser+'/Cart/')
@@ -162,41 +190,58 @@ return keyUser
 
         })
      })
+    }
      return list
   }
   createOrder= async()=>{
     var keyUser=await this.getUsKey();
-    var ListC=[];
-    this.state.product.forEach(elm=>{
-       var product={
-       Title:'',
-       Quantity:'',
-       Avatar:'',
-       Price:'',
-      
-       }
-       product.Title=elm.content,
-       product.Quantity=elm.count,
-       product.Price=elm.price,
-       product.Avatar=elm.img,
-       ListC.push(product);
-    });
+    if(this.state.product.length>0){
+      if (typeof(keyUser)!== 'undefined')
+    {
+        var ListC=[];
+   
   
           var date= new Date();
           var Total= this.state.total
-          var DateTime=date.getFullYear()+'-'+date.getMonth() + 1;
+          var DateTime=date.getFullYear()+'-'+(parseInt(date.getMonth())+1)+"-"+date.getDate();
           var order={
             date:DateTime,
             Total:Total
          }
-          var DateTime=date.getFullYear()+'-'+date.getMonth() + 1+"-"+date.getDay();
+        
+         
            var key=  firebaseApp
            .database()
            .ref("/User/"+keyUser+"/Order/").ref.push(order).key;
+           this.state.product.forEach(elm=>{
+            var product={
+            Title:'',
+            Quantity:'',
+            Price:'',  
+            }
+            product.Title=elm.content,
+            product.Quantity=elm.count,
+            product.Price=elm.price,
+            firebaseApp
+           .database()
+           .ref("/User/"+keyUser+"/Order/"+key+'/'+product.Title).ref.update(product)
+         });
+           
            firebaseApp
            .database()
-           .ref("/User/"+keyUser+"/Order/"+key+'/').ref.update(ListC)
-       
+           .ref("/User/"+keyUser+"/Cart/").ref.remove().then((result) => {
+            Alert.alert('Success !!!');
+           }).catch((err) => {
+            Alert.alert('ERRO!!!');
+           });
+           this.componentDidMount();
+           this.props.navigation.navigate("ProductsViewScreen")
+        }
+      }
+      else{
+        Alert.alert('Cart Is Null !!!');
+        this.props.navigation.navigate("ProductsViewScreen")
+      }
        
        }
  
@@ -208,6 +253,7 @@ return keyUser
           <View>
             <FlatList
               data={this.state.product}
+              keyExtractor={(item)=>item.content}
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
                 return (
@@ -216,6 +262,7 @@ return keyUser
                     index={index}
                     onClosePress={() => this.removeItem(item, index)}
                     getTotal={this.getTotal}
+                    
                   />
                 );
               }}

@@ -7,6 +7,7 @@ import {
   View,
   FlatList,
   Dimensions,
+  AsyncStorage
 } from "react-native";
 import Product from "../components/Product";
 import CategoryItem from "../components/CategoryItem";
@@ -169,7 +170,16 @@ search=(inputText)=>{
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <SearchBar onSearch={this.search} onPress={() => this.props.navigation.navigate("LoginScreen")} />
+        <SearchBar onSearch={this.search} onPress={async()=>{
+                      let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    this.props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                        this.props.navigation.navigate('ProductCartScreen')
+                    }
+                }} />
         <View
           onTouchEnd={() => {
             if (

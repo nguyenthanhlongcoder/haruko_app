@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,Alert,AsyncStorage } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import { myColors } from "../assets/myColors";
 
@@ -20,7 +20,16 @@ export default function SearchBar(props) {
             defaultValue={text} />
         </View>
         <View style={styles.icons}>
-          <TouchableOpacity onPress={()=>props.navigation.navigate('LoginScreen')}>
+          <TouchableOpacity onPress={async() => {
+                     let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                       Alert.alert('The feature is in development :)')
+                    }
+                    }}>
           <Icon onPress={props.onChatPress} style={styles.icon} name="message1" color="#fff" />
 
           </TouchableOpacity>
