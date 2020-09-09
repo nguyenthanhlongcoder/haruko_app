@@ -35,6 +35,7 @@ export default class Product extends React.Component {
         <TouchableOpacity onPress={this.props.onPress}>
           <View style={styles.container}>
             <Image
+            resizeMode="cover"
               style={styles.img}
               source={{ uri: this.props.item.avatar }}
             />

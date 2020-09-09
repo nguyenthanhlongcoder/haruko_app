@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet,AsyncStorage} from 'react-native';
+import { View, Text, StyleSheet,AsyncStorage,Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { myColors } from '../assets/myColors';
 import { Appbar } from 'react-native-paper';
@@ -12,12 +12,21 @@ export default function AppBar(props, {navigation}) {
                 <Text style={styles.header}>{props.title}</Text>
             </View>
             <View style={styles.icons}>
-                <TouchableOpacity onPress={() =>{ props.navigation.navigate('LoginScreen')}}>
+                <TouchableOpacity onPress={async() => {
+                     let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                       Alert.alert('The feature is in development :)')
+                    }
+                    }}>
                     <Icon style={styles.icon} name="message1" color='#fff' />
                 </TouchableOpacity>
                 <TouchableOpacity  onPress={async() => {
                      let userStatus = await AsyncStorage.getItem("status");
-                    if(userStatus===false){
+                    if(userStatus==='false'){
                     props.navigation.navigate('LoginScreen');
                     }
                     else

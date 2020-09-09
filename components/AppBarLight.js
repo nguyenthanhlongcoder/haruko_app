@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity ,Text} from 'react-native';
+import { View, StyleSheet, TouchableOpacity ,Text,AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { myColors } from '../assets/myColors';
 
@@ -13,8 +13,26 @@ export default function AppBarLight(props) {
     <Text style={styles.header}>{props.title}</Text>
             </View>
             <View style={styles.icons}>
-                <Icon style={styles.icon} name="message1" color={myColors.defaultPrimaryColor} />
-                <Icon style={styles.icon} name="search1" color={myColors.defaultPrimaryColor} />
+                <Icon onPress={async()=>{
+                      let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                        props.navigation.navigate('ProductCartScreen')
+                    }
+                }} style={styles.icon} name="message1" color={myColors.defaultPrimaryColor} />
+                <Icon onPress={async()=>{
+                      let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                        props.navigation.navigate('ProductCartScreen')
+                    }
+                }} style={styles.icon} name="search1" color={myColors.defaultPrimaryColor} />
             </View>
         </View>
     )

@@ -9,7 +9,7 @@ export default function AccountLogout() {
     <TouchableOpacity
       onPress={async () => {
         try {       
-          await AsyncStorage.setItem("status", true);
+          await AsyncStorage.setItem("status", 'false');
         } catch (error) {
           console.log("Something went wrong", error);
         }

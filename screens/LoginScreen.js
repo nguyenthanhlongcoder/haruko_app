@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation }) {
  const storeToken= async (user)=> {
     try {
        await AsyncStorage.setItem("userData", JSON.stringify(user));
-       await AsyncStorage.setItem("status", true);
+       await AsyncStorage.setItem("status", 'true');
     } catch (error) {
       console.log("Something went wrong", error);
     }
