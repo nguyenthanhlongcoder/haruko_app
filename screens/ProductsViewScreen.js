@@ -141,10 +141,7 @@ search=(inputText)=>{
         data.child("Product").forEach((element) => {
           var product = {
             content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-            content: "",
             price: "",
-            sold: 8,
             category: "",
             description: "",
             avatar:'',
@@ -209,9 +206,9 @@ search=(inputText)=>{
             horizontal={true}
             data={this.state.data}
             ref="cateList"
-            onScrollAnimationEnd={() => {
-              this.refs.cateList.scrollTop;
-            }}
+            // onScrollAnimationEnd={() => {
+            //   this.refs.cateList.scrollTop;
+            // }}
             renderItem={({ item, index }) => {
               return (
                 <CategoryItem
