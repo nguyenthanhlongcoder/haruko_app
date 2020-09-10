@@ -23,6 +23,8 @@ import MyStatusBar from "../components/MyStatusBar";
 import { firebaseApp } from "../components/FirebaseConfig";
 import { element } from "prop-types";
 import { Title } from "react-native-paper";
+
+
 export default class ProductDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -193,7 +195,7 @@ componentWillUnmount=async()=>{
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar />
-        <AppBarLight onPress={() => this.props.navigation.navigate("ProductCartScreen")} title="" navigation={navigation} />
+        <AppBarLight onPress={() => this.props.navigation.goBack()} title="" navigation={navigation} />
         <ScrollView ref='_scrollView' showsVerticalScrollIndicator={false}>
           <View>
             <Carousel

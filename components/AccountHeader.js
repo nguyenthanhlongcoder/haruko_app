@@ -7,7 +7,7 @@ export default function AccountHeader(props) {
     const [state, setState] = useState({
         displayName: '',
         email: '',
-        status: 'false'
+        status: ''
     })
 
 
@@ -24,16 +24,15 @@ export default function AccountHeader(props) {
                 })
             } catch (error) {
             }
-        }
-    );
-
+        },
+    )
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
                 <View>
                     <Image style={styles.image} source={{ uri: 'http://lorempixel.com/50/50/' }} />
                 </View>
-                {state.status === 'true' ?
+                {state.status == 'true' ?
                     <View>
                         <Text style={styles.name}>{state.displayName}</Text>
                         <Text style={styles.email}>{state.email}</Text>

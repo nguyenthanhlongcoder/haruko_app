@@ -21,9 +21,7 @@ import IconAntDesign from "react-native-vector-icons/AntDesign";
 import ProductCartAppBar from "../components/ProductCartAppBar";
 import { firebaseApp } from "../components/FirebaseConfig";
 import ProductCartItem from "../components/ProductCartItem";
-import { element } from "prop-types";
-import { database } from "firebase";
-import { List } from "react-native-paper";
+import { GetData } from "../components/GetData";
 export default class ProductCartScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +38,7 @@ export default class ProductCartScreen extends React.Component {
   defaultLoadData = async() => {
    
     this.state.product=[]
-    var keyUser=await this.getUsKey();
+    var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
     var list=[]
     firebaseApp
       .database()
@@ -115,7 +113,7 @@ export default class ProductCartScreen extends React.Component {
       {this.state.product[index].count=this.state.product[index].count-1
       this.setState({product:this.state.product})}
     }
-    var keyUser=await this.getUsKey();
+    var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
     var listPro=[]
     this.state.product.forEach(e=>{
       var pro={
@@ -132,15 +130,15 @@ export default class ProductCartScreen extends React.Component {
     
     })
     this.state.product=[]
-  await  firebaseApp
+    await  firebaseApp
     .database()
-    .ref("/User/"+keyUser+"/Cart/"+item.content+'/'+'Quantity').set(listPro[index].Quantity)
+    .ref("/User/"+keyUser+"/Cart/"+item.content+'/').set(listPro[index])
    
   
   }
   
   removeItem = async(item, ind) => {
-    var keyUser=await this.getUsKey();
+    var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
     if (typeof(keyUser)!== 'undefined'){
     await  firebaseApp
     .database()
@@ -158,25 +156,9 @@ this.defaultLoadData()
     this.setState({total:this.state.total});
     
   } 
-  getUsKey=async ()=>{
-    var keyUser=''
-    await  firebaseApp
-      .database()
-      .ref("/User/")
-      .orderByChild("Email")
-      .equalTo(this.state.email)
-      .on("value", (snap) => {
-        snap.forEach((element) => {
-          if (element.val().Password === this.state.password) {
-            keyUser=element.key;
-         }
-        });
-      });
-return keyUser
-  }
   getCartList= async()=>
   {
-    var keyUser=await this.getUsKey();
+    var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
     
     var list=[]
     if(keyUser!=null)
@@ -194,7 +176,7 @@ return keyUser
      return list
   }
   createOrder= async()=>{
-    var keyUser=await this.getUsKey();
+    var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
     if(this.state.product.length>0){
       if (typeof(keyUser)!== 'undefined')
     {
