@@ -102,7 +102,47 @@ export default class ProductDetailScreen extends React.Component {
 componentDidMount=async()=>{
 await this.getToken();
 this.defaultLoadData();
+this.addToNewView();
 }
+componentWillUnmount=async()=>{
+  let userStatus = await AsyncStorage.getItem("status");
+  if(userStatus==='true'){
+    var keyUser=''
+    if (typeof(keyUser)!== 'undefined'){
+  await  firebaseApp
+    .database()
+    .ref("/User/")
+    .orderByChild("Email")
+    .equalTo(this.state.email)
+    .on("value", (snap) => {
+      snap.forEach((element) => {
+        if (element.val().Password === this.state.password) {
+          keyUser=element.key;
+                    
+       }
+      });
+    });
+    var pro={
+      Title:'',
+      Description:'',
+      Avatar:'',
+      Price:'',
+      Category:''
+
+    }
+    pro.Title=this.state.item.content;
+    pro.Price=this.state.item.price;
+    pro.Description=this.state.item.description;
+    pro.Avatar=this.state.item.avatar;
+    pro.Category=this.state.item.category;
+    firebaseApp
+    .database()
+    .ref("/User/"+keyUser+"/Recent/"+this.state.item.content+'/').set(pro)
+
+    }
+  }
+  
+  }
   reload(item)
   {
     this.state.item=item;
@@ -111,6 +151,7 @@ this.defaultLoadData();
     this.state.imageList=[];
     this.defaultLoadData();
   }
+
   addToCart=async()=>{
     var keyUser=''
   await  firebaseApp
@@ -138,10 +179,12 @@ this.defaultLoadData();
     pro.Avatar=this.state.item.avatar
     pro.Price=this.state.item.price
     console.log(keyUser)
+    if (typeof(keyUser)!== 'undefined')
+    {
     firebaseApp
     .database()
     .ref("/User/"+keyUser+"/Cart/"+this.state.item.content+'/').set(pro)
-
+    }
   }
   render() {
     const { width } = Dimensions.get("window");
@@ -203,9 +246,31 @@ this.defaultLoadData();
         </ScrollView>
 
         {Platform.OS === "ios" ? (
-          <Text style={styles.button}>Add to Cart</Text>
+          <Text onPress={
+            async ()=>{
+             let userStatus = await AsyncStorage.getItem("status");
+                     if(userStatus==='false'){
+                     this.props.navigation.navigate('LoginScreen');
+                     }
+                     else
+                     {
+                       this.addToCart();
+                       this.props.navigation.navigate("ProductCartScreen");
+                     }
+             }}  style={styles.button}>Add to Cart</Text>
         ) : (
-          <Button title="Add to Cart" color={myColors.defaultPrimaryColor} onPress={()=>{this.addToCart();this.props.navigation.navigate("ProductCartScreen")}} />
+          <Button title="Add to Cart" color={myColors.defaultPrimaryColor} onPress={
+           async ()=>{
+            let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    this.props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                      this.addToCart();
+                      this.props.navigation.navigate("ProductCartScreen");
+                    }
+            }} />
         )}
       </SafeAreaView>
     );

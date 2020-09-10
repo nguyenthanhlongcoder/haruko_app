@@ -46,7 +46,7 @@ export default function SignUpScreen({ navigation }) {
 
                 <Text style={[styles.text_footer, {
                     marginTop: 35
-                }]}>Confirm Password</Text>
+                }]}>Password</Text>
                 <View style={styles.action}>
                     <Feather
                         name="lock"
@@ -71,7 +71,7 @@ export default function SignUpScreen({ navigation }) {
 
                 <Text style={[styles.text_footer, {
                     marginTop: 35
-                }]}>Password</Text>
+                }]}>Confirm Password</Text>
                 <View style={styles.action}>
                     <Feather
                         name="lock"

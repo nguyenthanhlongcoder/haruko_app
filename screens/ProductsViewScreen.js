@@ -7,6 +7,7 @@ import {
   View,
   FlatList,
   Dimensions,
+  AsyncStorage
 } from "react-native";
 import Product from "../components/Product";
 import CategoryItem from "../components/CategoryItem";
@@ -55,13 +56,12 @@ export default class ProductsViewScreen extends React.Component {
         data.child("Product").forEach((element) => {
           var product = {
             content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
             content: "",
             price: "",
             sold: 8,
             category: "",
             description: "",
-         
+            avatar: ''
           };
 
           product.content = element.val().Title;
@@ -166,7 +166,16 @@ search=(inputText)=>{
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <SearchBar onSearch={this.search} onPress={() => this.props.navigation.navigate("LoginScreen")} />
+        <SearchBar onSearch={this.search} onPress={async()=>{
+                      let userStatus = await AsyncStorage.getItem("status");
+                    if(userStatus==='false'){
+                    this.props.navigation.navigate('LoginScreen');
+                    }
+                    else
+                    {
+                        this.props.navigation.navigate('ProductCartScreen')
+                    }
+                }} />
         <View
           onTouchEnd={() => {
             if (
@@ -206,9 +215,7 @@ search=(inputText)=>{
             horizontal={true}
             data={this.state.data}
             ref="cateList"
-            // onScrollAnimationEnd={() => {
-            //   this.refs.cateList.scrollTop;
-            // }}
+           
             renderItem={({ item, index }) => {
               return (
                 <CategoryItem
