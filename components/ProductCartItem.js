@@ -31,13 +31,11 @@ export default class ProductCartItem extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
           <Image
             style={styles.img}
             resizeMode="center"
             source={{ uri: this.props.item.img }}
           />
-        </View>
         <View style={styles.containerItem}>
           <View style={styles.containerItemChild}>
             <Text style={styles.content}>{this.props.item.content}</Text>
@@ -48,11 +46,6 @@ export default class ProductCartItem extends React.Component {
             ></Icon>
           </View>
 
-          <View style={styles.containerItemChild}>
-            <Text style={[styles.text, styles.pro]}>
-              Provided by Haruko shop
-            </Text>
-          </View>
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.text1]}>
               {this.props.item.price}
@@ -79,13 +72,6 @@ export default class ProductCartItem extends React.Component {
                 name="plus"
               ></Icon>
             </View>
-            <View style={(styles.containerItemChild, { width: "50%" })}>
-              <Text
-                style={[{ textAlign: "right", fontSize: 15 }, styles.text1]}
-              >
-                Buy late
-              </Text>
-            </View>
           </View>
         </View>
       </View>
@@ -96,17 +82,15 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get("window").width - 10,
     flexDirection: "row",
-    alignItems: "center",
     padding: 10,
     borderWidth: 1,
-    margin: 5,
     height: Dimensions.get("window").height / 5,
     borderColor: "#d5d5d5",
   },
   containerItem: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "center",
+    marginLeft: 10
   },
   containerItemChild: {
     flexDirection: "row",
@@ -130,9 +114,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingLeft: 10,
   },
-  text1: {
-    color: myColors.defaultPrimaryColor,
-  },
+ 
   pro: {
     opacity: 0.6,
   },

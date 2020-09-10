@@ -17,7 +17,7 @@ import SearchBar from "../components/SearchBar";
 import MyStatusBar from "../components/MyStatusBar";
 import Icon from "react-native-vector-icons/Foundation";
 import { GetData } from "../components/GetData";
-
+import {firebaseApp} from '../components/FirebaseConfig';
 export default class ProductsViewScreen extends React.Component {
   constructor() {
     super();
@@ -27,15 +27,53 @@ export default class ProductsViewScreen extends React.Component {
       cateGory: [],
     };
   }
-  componentWillMount =async() => {
-  await this.defaultLoadData();
-  };
-  defaultLoadData = async () => {
-    this.setState({
-      product: await GetData.getProduct(),
-      data:await GetData.getCategory(),
-     
-    });
+  componentDidMount() {
+    console.log( this.props)
+    this.defaultLoadData();
+  }
+  defaultLoadData = () => {
+    let catelist = [
+      {
+        Title: "ALL",
+        isChecked: true,
+      },
+    ];
+    let Productlist = [];
+    firebaseApp
+      .database()
+      .ref("/Shop/")
+      .on("value", (data) => {
+        data.child("Category").forEach((element) => {
+          var cate = {
+            Title: "",
+            isChecked: false,
+          };
+          cate.Title = element.val().Title;
+          catelist.push(cate);
+        });
+        data.child("Product").forEach((element) => {
+          var product = {
+            content: "",
+            content: "",
+            price: "",
+            sold: 8,
+            category: "",
+            description: "",
+            avatar: ''
+          };
+
+          product.content = element.val().Title;
+          product.price = element.val().Price;
+          product.description = element.val().Description;
+          product.avatar = element.val().Avatar;
+          product.category = element.val().Category;
+          Productlist.push(product);
+        });
+
+        this.setState({ data: catelist, product: Productlist });
+        
+      });
+      console.log(this.state.product)
   };
   onCateItemPress = async (item, ind) => {
     for (var i = 0; i < this.state.data.length; i++) {
@@ -54,6 +92,36 @@ export default class ProductsViewScreen extends React.Component {
   search = async (inputText) => {
     this.setState({ product: await GetData.getProductByName(inputText) });
   };
+search=(inputText)=>{
+  var Productlist = [];
+  firebaseApp
+      .database()
+      .ref("/Shop/")
+      .on("value", (data) => {
+        data.child("Product").forEach((element) => {
+          var product = {
+            content: "",
+            price: "",
+            category: "",
+            description: "",
+            avatar:'',
+           
+          };
+          if (element.val().Title.toUpperCase().search(inputText.toUpperCase())!=-1) {
+            product.content = element.val().Title;
+            product.price = element.val().Price;
+            product.description = element.val().Description;
+            product.avatar = element.val().Avatar;
+            product.category = element.val().Category;
+           
+            Productlist.push(product);
+          
+          }
+        });
+        this.setState({ product: Productlist });
+      });
+
+}
   render() {
     return (
       <View style={styles.container}>
@@ -108,9 +176,7 @@ export default class ProductsViewScreen extends React.Component {
             horizontal={true}
             data={this.state.data}
             ref="cateList"
-            onScrollAnimationEnd={() => {
-              this.refs.cateList.scrollTop;
-            }}
+           
             renderItem={({ item, index }) => {
               return (
                 <CategoryItem

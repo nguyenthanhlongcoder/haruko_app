@@ -24,29 +24,30 @@ export default function LoginScreen({ navigation }) {
     isValidUser: false,
     isValidPassword: false,
     errorMessage: null,
-    useData:{},
+    useData: {},
   });
-  React.useEffect(()=>{
+  React.useEffect(() => {
     getToken();
   })
- const storeToken= async (user)=> {
+  const storeToken = async (user) => {
     try {
-       await AsyncStorage.setItem("userData", JSON.stringify(user));
-       await AsyncStorage.setItem("status", 'true');
+      await AsyncStorage.setItem("userData", JSON.stringify(user));
+      await AsyncStorage.setItem("status", 'true');
     } catch (error) {
       console.log("Something went wrong", error);
     }
   }
- const  getToken=async (user)=> {
+  const getToken = async (user) => {
     try {
       let userData = await AsyncStorage.getItem("userData");
       let data = JSON.parse(userData);
-      
+      console.log('DATA' + data);
+
     } catch (error) {
       console.log("Something went wrong", error);
     }
   }
-  
+
   const checkAccount = () => {
     console.log("check" + data.email);
     firebaseApp
@@ -57,9 +58,9 @@ export default function LoginScreen({ navigation }) {
       .on("value", (snap) => {
         snap.forEach((element) => {
           if (element.val().Password === data.password) {
-           storeToken(JSON.stringify(element));
+            storeToken(JSON.stringify(element));
             navigation.goBack();
-            
+
           }
         });
       });
@@ -124,8 +125,8 @@ export default function LoginScreen({ navigation }) {
             {data.secureTextEntry ? (
               <Feather name="eye-off" color="grey" size={20} />
             ) : (
-              <Feather name="eye" color="grey" size={20} />
-            )}
+                <Feather name="eye" color="grey" size={20} />
+              )}
           </TouchableOpacity>
         </View>
 

@@ -4,6 +4,7 @@ import PurchaseScreen from './PurchaseScreen';
 import AccountScreen from './AccountScreen';
 import MyProductScreen from './MyProductScreen';
 import LoginScreenStack from './LoginScreenStack';
+import SignUpScreen from './SignUpScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function AccountScreenStack({navigation, route}){
             <Stack.Screen name="PurchaseScreen" component={PurchaseScreen}/>
             <Stack.Screen name="MyProductScreen" component={MyProductScreen}/>
             <Stack.Screen name="LoginScreen" component={LoginScreenStack}/>
+            <Stack.Screen name='SignUpScreen' component={SignUpScreen}/>
         </Stack.Navigator>
     )
 }

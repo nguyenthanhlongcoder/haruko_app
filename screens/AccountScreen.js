@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, Image, StyleSheet , AsyncStorage} from 'react-native';
 import AccountPurchases from '../components/AccountPurchases';
 import AccountHeader from '../components/AccountHeader';
 import AccountMyProduct from '../components/AccountMyProducts';
@@ -11,11 +11,12 @@ import { Appbar } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function AccountScreen({ navigation }) {
+   
     return (
         <SafeAreaView style={{ flex: 1, }}>
             <ScrollView>
                 <AppBar title='' navigation={navigation}/>
-                <AccountHeader />
+                <AccountHeader navigation={navigation}/>
                 <AccountPurchases navigation={navigation} />
                 <View style={styles.divider} />
                 <AccountMyProduct navigation={navigation}/>

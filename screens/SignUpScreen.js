@@ -48,7 +48,7 @@ export default function SignUpScreen({ navigation }) {
           />
         </View>
         <View style={styles.divider} />
-        <Text style={styles.text_footer}>Display Name</Text>
+        <Text style={[styles.text_footer,{marginTop: 35}]}>Display Name</Text>
         <View style={styles.action}>
           <FontAwesome name="user-o" color="#05375a" size={20} />
           <TextInput
@@ -143,6 +143,8 @@ export default function SignUpScreen({ navigation }) {
                   DisplayName:data.displayName
                 }
                 await PushData.SignUp(user)
+
+                navigation.navigate('LoginScreen');
               } else {
                 Alert.alert("exist Email");
               }

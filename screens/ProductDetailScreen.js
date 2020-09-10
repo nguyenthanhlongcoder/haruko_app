@@ -248,7 +248,18 @@ componentWillUnmount=async()=>{
         </ScrollView>
 
         {Platform.OS === "ios" ? (
-          <Text style={styles.button}>Add to Cart</Text>
+          <Text onPress={
+            async ()=>{
+             let userStatus = await AsyncStorage.getItem("status");
+                     if(userStatus==='false'){
+                     this.props.navigation.navigate('LoginScreen');
+                     }
+                     else
+                     {
+                       this.addToCart();
+                       this.props.navigation.navigate("ProductCartScreen");
+                     }
+             }}  style={styles.button}>Add to Cart</Text>
         ) : (
           <Button title="Add to Cart" color={myColors.defaultPrimaryColor} onPress={
            async ()=>{

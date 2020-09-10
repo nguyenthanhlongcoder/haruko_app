@@ -19,9 +19,9 @@ export default function AccountLogout() {
         <View style={styles.containerChild}>
           <View style={styles.containerLeft}>
             <MaterialIcons
-              name="person"
+              name="lock-open"
               style={styles.icon}
-              color={myColors.defaultPrimaryColor}
+              color='#FF6F91'
             />
             <Text style={styles.name}>Logout</Text>
           </View>
