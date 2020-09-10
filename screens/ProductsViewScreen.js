@@ -7,7 +7,7 @@ import {
   View,
   FlatList,
   Dimensions,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import Product from "../components/Product";
 import CategoryItem from "../components/CategoryItem";
@@ -15,9 +15,8 @@ import { myColors } from "../assets/myColors";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
 import SearchBar from "../components/SearchBar";
 import MyStatusBar from "../components/MyStatusBar";
-import { firebaseApp } from "../components/FirebaseConfig";
 import Icon from "react-native-vector-icons/Foundation";
-import { element } from "prop-types";
+import { GetData } from "../components/GetData";
 
 export default class ProductsViewScreen extends React.Component {
   constructor() {
@@ -26,61 +25,19 @@ export default class ProductsViewScreen extends React.Component {
       iconName: "right",
       cateListHeight: 0,
       cateGory: [],
-     
     };
   }
-  componentDidMount() {
-    console.log( this.props)
-    this.defaultLoadData();
-  }
-  defaultLoadData = () => {
-    let catelist = [
-      {
-        Title: "ALL",
-        isChecked: true,
-      },
-    ];
-    let Productlist = [];
-    firebaseApp
-      .database()
-      .ref("/Shop/")
-      .on("value", (data) => {
-        data.child("Category").forEach((element) => {
-          var cate = {
-            Title: "",
-            isChecked: false,
-          };
-          cate.Title = element.val().Title;
-          catelist.push(cate);
-        });
-        data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-            content: "",
-            price: "",
-            sold: 8,
-            category: "",
-            description: "",
-         
-          };
-
-          product.content = element.val().Title;
-          product.price = element.val().Price;
-          product.description = element.val().Description;
-          product.avatar = element.val().Avatar;
-          product.category = element.val().Category;
-          Productlist.push(product);
-        });
-
-        this.setState({ data: catelist, product: Productlist });
-        
-      });
-      console.log(this.state.product)
+  componentWillMount =async() => {
+  await this.defaultLoadData();
   };
-  onCateItemPress = (item, ind) => {
-    var Productlist = [];
-  
+  defaultLoadData = async () => {
+    this.setState({
+      product: await GetData.getProduct(),
+      data:await GetData.getCategory(),
+     
+    });
+  };
+  onCateItemPress = async (item, ind) => {
     for (var i = 0; i < this.state.data.length; i++) {
       if (i === ind) {
         this.state.data[ind].isChecked = true;
@@ -92,94 +49,26 @@ export default class ProductsViewScreen extends React.Component {
     this.setState({
       data: this.state.data,
     });
-
-    console.log(this.state.data[ind].isChecked);
-    firebaseApp
-      .database()
-      .ref("/Shop/")
-      .on("value", (data) => {
-        data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-            content: "",
-            price: "",
-            sold: 8,
-            category: "",
-            description: "",
-            avatar:'',
-          
-          };
-          if (element.val().Category === item.Title) {
-            product.content = element.val().Title;
-            product.price = element.val().Price;
-            product.description = element.val().Description;
-            product.avatar = element.val().Avatar;
-            product.category = element.val().Category;
-            
-            Productlist.push(product);
-          
-          }
-          if (item.Title === "ALL") {
-            product.content = element.val().Title;
-            product.price = element.val().Price;
-            product.description = element.val().Description;
-            product.avatar = element.val().Avatar;
-            product.category = element.val().Category;
-           
-            Productlist.push(product);
-          }
-        });
-        this.setState({ product: Productlist });
-      });
+    this.setState({ product: await GetData.getProductByCate(item.Title) });
   };
-search=(inputText)=>{
-  var Productlist = [];
-  firebaseApp
-      .database()
-      .ref("/Shop/")
-      .on("value", (data) => {
-        data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-            content: "",
-            price: "",
-            sold: 8,
-            category: "",
-            description: "",
-            avatar:'',
-           
-          };
-          if (element.val().Title.toUpperCase().search(inputText.toUpperCase())!=-1) {
-            product.content = element.val().Title;
-            product.price = element.val().Price;
-            product.description = element.val().Description;
-            product.avatar = element.val().Avatar;
-            product.category = element.val().Category;
-           
-            Productlist.push(product);
-          
-          }
-        });
-        this.setState({ product: Productlist });
-      });
-
-}
+  search = async (inputText) => {
+    this.setState({ product: await GetData.getProductByName(inputText) });
+  };
   render() {
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <SearchBar onSearch={this.search} onPress={async()=>{
-                      let userStatus = await AsyncStorage.getItem("status");
-                    if(userStatus==='false'){
-                    this.props.navigation.navigate('LoginScreen');
-                    }
-                    else
-                    {
-                        this.props.navigation.navigate('ProductCartScreen')
-                    }
-                }} />
+        <SearchBar
+          onSearch={this.search}
+          onPress={async () => {
+            let userStatus = await AsyncStorage.getItem("status");
+            if (userStatus === "false") {
+              this.props.navigation.navigate("LoginScreen");
+            } else {
+              this.props.navigation.navigate("ProductCartScreen");
+            }
+          }}
+        />
         <View
           onTouchEnd={() => {
             if (
@@ -225,8 +114,8 @@ search=(inputText)=>{
             renderItem={({ item, index }) => {
               return (
                 <CategoryItem
-                  onPress={() => {
-                    this.onCateItemPress(item, index);
+                  onPress={async () => {
+                    await this.onCateItemPress(item, index);
                   }}
                   item={item}
                 />
@@ -247,13 +136,9 @@ search=(inputText)=>{
             return (
               <Product
                 item={item}
-                
-                onPress={() =>
-                {
-                  this.props.navigation.navigate("ProductDetailScreen", item)
-                 
-                  }
-                }
+                onPress={() => {
+                  this.props.navigation.navigate("ProductDetailScreen", item);
+                }}
               />
             );
           }}

@@ -1,7 +1,8 @@
 import React  from 'react';
-import {SafeAreaView,AsyncStorage} from 'react-native';
+import {SafeAreaView,AsyncStorage,FlatList} from 'react-native';
 import AppBarLight from '../components/AppBarLight';
 import { firebaseApp } from "../components/FirebaseConfig";
+import Product  from '../components/Product'
 export default  class MyProductScreen extends React.Component{
   constructor(props) {
     super(props);
@@ -11,6 +12,20 @@ export default  class MyProductScreen extends React.Component{
       password:'',
     
     };
+  }
+  getToken=async (user)=> {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      var us= JSON.parse(data);
+      this.state.email=us.Email
+     this.setState({email:this.state.email})
+     this.state.password=us.Password;
+     this.setState({password:this.state.password})
+       
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
   }
   componentDidMount= async()=> {
   
@@ -41,14 +56,6 @@ return keyUser
       .database()
       .ref("/User/"+keyUser)
       .on("value", (data) => {
-        data.child("Category").forEach((element) => {
-          var cate = {
-            Title: "",
-            isChecked: false,
-          };
-          cate.Title = element.val().Title;
-          catelist.push(cate);
-        });
         data.child("Recent").forEach((element) => {
           var product = {
             content: "",
@@ -68,8 +75,8 @@ return keyUser
           product.category = element.val().Category;
           Productlist.push(product);
         });
-
-        this.setState({ data: catelist, product: Productlist });
+           
+        this.setState({ product: Productlist });
         
       });
       console.log(this.state.product)
@@ -78,7 +85,22 @@ return keyUser
     return(
         <SafeAreaView>
             <AppBarLight navigation={this.props.navigation} title={this.props.route.params.title}/>
+            <FlatList
+              data={this.state.product}
+              numColumns={2}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={(item)=>item.content}
 
+              renderItem={({item})=>{return(<Product item={item}
+                onPress={() =>
+                {
+                  this.props.navigation.navigate("ProductDetailScreen",item)
+                 
+                  }
+                }
+               />)}}
+
+            />
         </SafeAreaView>
     )}
 }

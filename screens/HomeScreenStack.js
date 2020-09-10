@@ -2,6 +2,8 @@ import React from 'react';
 import { createStackNavigator} from '@react-navigation/stack'
 import HomeScreen from './HomeScreen'
 import LoginScreenStack from './LoginScreenStack';
+import ProductDetailScreen from '../screens/ProductDetailScreen'
+
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,7 @@ export default function HomeScreenStack({navigation, route}){
         <Stack.Navigator headerMode='none'>
             <Stack.Screen name='HomeScreen' component={HomeScreen}/>
             <Stack.Screen name='LoginScreen' component={LoginScreenStack}/>
+            <Stack.Screen name='ProductDetailScreen' component={ProductDetailScreen}/>
         </Stack.Navigator>
     )
 }
