@@ -1,6 +1,5 @@
 import React from "react";
 import { View, FlatList, AsyncStorage } from "react-native";
-import { func } from "prop-types";
 import PurchaseItem from "../components/PurchaseItem";
 import { firebaseApp } from "../components/FirebaseConfig";
 export default class EachPurchaseScreen extends React.Component {
@@ -61,13 +60,15 @@ export default class EachPurchaseScreen extends React.Component {
             key: "",
             Total: "",
             date: "",
+            quantity:'',
             img:
               "https://firebasestorage.googleapis.com/v0/b/haruko-a9264.appspot.com/o/Haruko%20Bracelet%2Fharuko_bracelet3.jpg?alt=media&token=c6e1fa64-1d8e-4187-8759-6a4f070ecfeb",
           };
-          pro.key = e.key;
-          pro.Total = e.val().Total;
-          pro.date = e.val().date;
-            console.log(e.val.Total);
+          pro.key =e.key;
+          pro.Total = e.val().Price;
+          pro.date = e.val().DateTime;
+          pro.img= e.val().Avatar,
+          pro.quantity=e.val().Quantity
           this.state.orderList.push(pro);
         });
         this.setState({
