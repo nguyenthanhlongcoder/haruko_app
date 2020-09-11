@@ -15,8 +15,8 @@ export default function HomeScreen({navigation}) {
             <ScrollView>
                 <HomeCarousel style={styles.carousel} />
                 <HomeAbout />
-                <HomeContact style={styles.shadow} />
                 <HomeMap style={styles.shadow} />
+                <HomeContact style={styles.shadow} />
             </ScrollView>
         </SafeAreaView>
     );

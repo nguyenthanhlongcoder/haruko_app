@@ -41,7 +41,7 @@ export default class ProductCartItem extends React.Component {
             <Text style={styles.content}>{this.props.item.content}</Text>
             <Icon
               onPress={this.props.onClosePress}
-              style={styles.icon}
+              style={[styles.icon,{color: myColors.defaultPrimaryColor, fontSize: 20, marginLeft: 15}]}
               name="close"
             ></Icon>
           </View>
@@ -63,7 +63,7 @@ export default class ProductCartItem extends React.Component {
                 ]}
                 name="minus"
               ></Icon>
-              <Text style={[styles.icon, { fontSize: 20 }]}>
+              <Text style={[styles.icon, { fontSize: 20, color: myColors.defaultPrimaryColor }]}>
                 {this.props.item.count}
               </Text>
               <Icon
@@ -80,7 +80,6 @@ export default class ProductCartItem extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get("window").width - 10,
     flexDirection: "row",
     padding: 10,
     borderWidth: 1,
@@ -90,20 +89,21 @@ const styles = StyleSheet.create({
   containerItem: {
     flex: 1,
     flexDirection: "column",
-    marginLeft: 10
+    marginHorizontal: 15
   },
   containerItemChild: {
     flexDirection: "row",
+    marginVertical: 5
   },
   content: {
     fontSize: 15,
     textAlign: "left",
-    width: "80%",
   },
   icon: {
     width: 25,
     height: 25,
     textAlign: "center",
+    color: '#fff'
   },
   img: {
     height: "100%",
@@ -112,14 +112,13 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "left",
     width: "100%",
-    paddingLeft: 10,
   },
  
   pro: {
     opacity: 0.6,
   },
   icons: {
-    backgroundColor: "#D5D5D5D5",
+    backgroundColor: myColors.defaultPrimaryColor,
     fontSize: 25,
   },
 });
