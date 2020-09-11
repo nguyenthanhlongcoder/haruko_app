@@ -145,7 +145,7 @@ search=(inputText)=>{
             ) {
               this.setState({
                 iconName: "down",
-                cateListHeight: Dimensions.get("window").height / 8,
+                cateListHeight: Dimensions.get("window").height / 9,
               });
             } else {
               this.setState({ iconName: "right", cateListHeight: 0 });
@@ -165,7 +165,7 @@ search=(inputText)=>{
             color={myColors.defaultPrimaryColor}
             style={{ marginHorizontal: 5 }}
           />
-          <Text style={{ fontSize: 25, opacity: 0.7 }}>Category</Text>
+          <Text style={{ fontSize: 20, opacity: 0.7 }}>Category</Text>
           <IconAntDesign
             name={this.state.iconName}
             style={{ fontSize: 20, flex: 1, textAlign: "right" }}

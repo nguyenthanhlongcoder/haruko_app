@@ -46,12 +46,7 @@ export default class ProductTitle extends React.Component {
             </View>
 
           </View>
-          <View style={styles.divider} />
-          <View style={styles.containerItem}>
-            <Text style={{ width: "50%", textAlign: "left", paddingLeft: 10 }}>
-              {this.props.item.sold} sold
-            </Text>
-          </View>
+         
         </View>
       );
     } else {

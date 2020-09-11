@@ -67,6 +67,7 @@ export default class ProductDetail extends React.Component {
               textAlign: "justify",
               height: this.state.detailHeight,
               position: "relative",
+              paddingHorizontal: 15
             }}
           >
             {this.props.item.description}
