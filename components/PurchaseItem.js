@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+
 import { myColors } from "../assets/myColors";
 import { render } from "react-dom";
 
@@ -44,7 +45,7 @@ export default class PurchaseItem extends React.Component {
             <Icon
               onPress={this.props.onClosePress}
               style={styles.icon}
-              name="close"
+            
             ></Icon>
           </View>
 
@@ -53,30 +54,23 @@ export default class PurchaseItem extends React.Component {
             {this.props.item.date}
             </Text>
           </View>
+          <View style={{flexDirection:'row'}}>
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.text1]}>
               {this.props.item.Total}
               <Text>đ</Text>
             </Text>
           </View>
+            <View>
+            <Text>{this.props.item.quantity}</Text>
+            </View>
+          </View>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.containerItemChild}>
-              <Icon
-                style={[
-                  styles.icon,
-                  styles.icons,
-                  { opacity: this.state.opacity },
-                ]}
-              
-              ></Icon>
+            
               <Text style={[styles.icon, { fontSize: 20 }]}>
                 {this.props.item.count}
               </Text>
-              <Icon
-                
-                style={[styles.icon, styles.icons]}
-               
-              ></Icon>
             </View>
             <View style={(styles.containerItemChild, { width: "50%" })}>
               <Text

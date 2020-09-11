@@ -13,6 +13,7 @@ export default  class MyProductScreen extends React.Component{
     
     };
   }
+
   getToken=async (user)=> {
     try {
       let userData = await AsyncStorage.getItem("userData");
@@ -27,12 +28,16 @@ export default  class MyProductScreen extends React.Component{
       console.log("Something went wrong", error);
     }
   }
-  componentDidMount= async()=> {
+  componentWillMount= async()=> {
   
+    let userStatus = await AsyncStorage.getItem("status");
+    if(userStatus=='true'){
     await this.getToken();
    await this.defaultLoadData();
     this.setTotal()
+  }
    }
+  
    getUsKey=async ()=>{
     var keyUser=''
     await  firebaseApp
