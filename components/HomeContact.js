@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     callNow: {
         flex: 1,
         textAlign: "right",
-        color: myColors.defaultPrimaryColor,
+        color: myColors.accentColor,
         fontSize: 15,
         
     },
