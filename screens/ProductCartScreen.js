@@ -22,6 +22,7 @@ import ProductCartAppBar from "../components/ProductCartAppBar";
 import { firebaseApp } from "../components/FirebaseConfig";
 import ProductCartItem from "../components/ProductCartItem";
 import { GetData } from "../components/GetData";
+import { Avatar } from "react-native-paper";
 export default class ProductCartScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -173,42 +174,39 @@ export default class ProductCartScreen extends React.Component {
     }
     return list
   }
-  createOrder = async () => {
-    var keyUser = await GetData.getUsKey(this.state.email, this.state.password);
-    if (this.state.product.length > 0) {
-      if (typeof (keyUser) !== 'undefined') {
-        var ListC = [];
-
-
-        var date = new Date();
-        var Total = this.state.total
-        var DateTime = date.getFullYear() + '-' + (parseInt(date.getMonth()) + 1) + "-" + date.getDate();
-        var order = {
-          date: DateTime,
-          Total: Total
-        }
-
-
-        var key = firebaseApp
-          .database()
-          .ref("/User/" + keyUser + "/Order/").ref.push(order).key;
-        this.state.product.forEach(elm => {
-          var product = {
-            Title: '',
-            Quantity: '',
-            Price: '',
-          }
-          product.Title = elm.content,
-            product.Quantity = elm.count,
-            product.Price = elm.price,
+  createOrder= async()=>{
+    var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
+    if(this.state.product.length>0){
+      if (typeof(keyUser)!== 'undefined')
+    {
+        var ListC=[];
+   
+  
+          var date= new Date();
+          var Total= this.state.total
+          var DateTime=date.getFullYear()+'-'+(parseInt(date.getMonth())+1)+"-"+date.getDate();
+         
+        
+           this.state.product.forEach(elm=>{
+            var product={
+            Title:'',
+            Quantity:'',
+            Price:'',
+            DateTime:DateTime,
+            Avatar:'' 
+            }
+            product.Title=elm.content,
+            product.Avatar=elm.img,
+            product.Quantity=elm.count,
+            product.Price=elm.price*elm.count,
             firebaseApp
-              .database()
-              .ref("/User/" + keyUser + "/Order/" + key + '/' + product.Title).ref.update(product)
-        });
-
-        firebaseApp
-          .database()
-          .ref("/User/" + keyUser + "/Cart/").ref.remove().then((result) => {
+           .database()
+           .ref("/User/"+keyUser+"/Order/"+product.Title).ref.update(product)
+         });
+           
+           firebaseApp
+           .database()
+           .ref("/User/"+keyUser+"/Cart/").ref.remove().then((result) => {
             Alert.alert('Success !!!');
           }).catch((err) => {
             Alert.alert('ERRO!!!');

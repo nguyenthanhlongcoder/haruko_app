@@ -11,6 +11,7 @@ import MainTabStack from './screens/MainTabStack';
 import ProductStack from './screens/ProductStack';
 import ProductCartItem from './components/ProductCartItem';
 import ProductCartScreen from './screens/ProductCartScreen'
+import SplashScreen from './screens/SplashScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
 
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
+      <Stack.Screen name='SpashScreen' component={SplashScreen}/>
       <Stack.Screen name="Main" component={MainTabStack}/>
     </Stack.Navigator>
     </NavigationContainer>

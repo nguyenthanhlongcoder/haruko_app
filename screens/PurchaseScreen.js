@@ -17,9 +17,8 @@ export default function PurchaseScreen({navigation}){
                      fontSize: 12
                  }
              }}>
-            <Tab.Screen name="To Pay" component={EachPurchaseScreen}/>
+            <Tab.Screen name="To Handle" component={EachPurchaseScreen}/>
             <Tab.Screen name="To Ship" component={EachPurchaseScreen}/>
-            <Tab.Screen name="To Receive" component={EachPurchaseScreen}/>
             <Tab.Screen name="Completed" component={EachPurchaseScreen}/>
         </Tab.Navigator>
         </SafeAreaView>

@@ -32,7 +32,7 @@ export default function AccountHeader(props) {
                 <View>
                     <Image style={styles.image} source={{ uri: 'http://lorempixel.com/50/50/' }} />
                 </View>
-                {state.status == 'true' ?
+                {state.status === 'true' ?
                     <View>
                         <Text style={styles.name}>{state.displayName}</Text>
                         <Text style={styles.email}>{state.email}</Text>
