@@ -54,6 +54,7 @@ export default class PurchaseItem extends React.Component {
             Date: {this.props.item.date}
             </Text>
           </View>
+          <View style={{flexDirection:'row'}}>
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.text1]}>
               Total: {this.props.item.Total}
@@ -62,6 +63,7 @@ export default class PurchaseItem extends React.Component {
           </View>
             <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.pro]}>Quanlity: {this.props.item.quantity}</Text>
+
             </View>
        
         </View>

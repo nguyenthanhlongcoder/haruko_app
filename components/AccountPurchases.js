@@ -47,6 +47,7 @@ export default function AccountPurchases(props) {
 
       <View style={styles.devider} />
      
+
     </View>
   );
 }
