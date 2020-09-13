@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Alert,
   TextInput,
+  ScrollView
 } from "react-native";
 import MySatatusBar from "../components/MyStatusBar";
 import AppBarLight from "../components/AppBarLight";
@@ -18,6 +19,8 @@ export default function SignUpScreen({ navigation }) {
   const [data, setData] = React.useState({
     email: "",
     password: "",
+    phone:'',
+    address:'',
     check_textInputChange: false,
     secureTextEntry: true,
     isValidUser: false,
@@ -28,9 +31,12 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+    
       <MySatatusBar />
       <AppBarLight navigation={navigation} />
       <View style={styles.container}>
+      <ScrollView
+      showsVerticalScrollIndicator={false}>
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <FontAwesome name="user-o" color="#05375a" size={20} />
@@ -64,6 +70,41 @@ export default function SignUpScreen({ navigation }) {
             }}
           />
         </View>
+        <View style={styles.divider} />
+        <Text style={[styles.text_footer,{marginTop: 35}]}>Address</Text>
+        <View style={styles.action}>
+          <FontAwesome name="map-marker" color="#05375a" size={20} />
+          <TextInput
+            placeholder="You Address"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={(val) => {
+              setData({
+                ...data,
+               address: val,
+                isValidUser: val !== "" ? true : false,
+              });
+            }}
+          />
+        </View>
+        <View style={styles.divider} />
+        <Text style={[styles.text_footer,{marginTop: 35}]}>Phone</Text>
+        <View style={styles.action}>
+          <FontAwesome name="mobile-phone" color="#05375a" size={20} />
+          <TextInput
+            placeholder="Your Phone Number"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={(val) => {
+              setData({
+                ...data,
+                phone: val,
+                isValidUser: val !== "" ? true : false,
+              });
+            }}
+          />
+        </View>
+
 
         <View style={styles.divider} />
 
@@ -125,6 +166,7 @@ export default function SignUpScreen({ navigation }) {
         <View style={styles.divider} />
 
         <Text
+        
           style={[
             styles.button,
             data.isValidUser && data.isValidPassword
@@ -140,7 +182,9 @@ export default function SignUpScreen({ navigation }) {
                 var user={
                   Email:data.email,
                   Password:data.password,
-                  DisplayName:data.displayName
+                  DisplayName:data.displayName,
+                  Address:data.address,
+                  Phone:data.phone,
                 }
                 await PushData.SignUp(user)
 
@@ -155,7 +199,9 @@ export default function SignUpScreen({ navigation }) {
         >
           Sign Up
         </Text>
+        </ScrollView>
       </View>
+     
     </SafeAreaView>
   );
 }

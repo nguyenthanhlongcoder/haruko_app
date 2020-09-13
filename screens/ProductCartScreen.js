@@ -176,12 +176,12 @@ export default class ProductCartScreen extends React.Component {
   }
   createOrder= async()=>{
     var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
+    var addressUser=await GetData.getUsAddress(this.state.email,this.state.password);
+    var phoneUser=await GetData.getUsPhone(this.state.email,this.state.password);
     if(this.state.product.length>0){
       if (typeof(keyUser)!== 'undefined')
     {
-        var ListC=[];
-   
-  
+        
           var date= new Date();
           var Total= this.state.total
           var DateTime=date.getFullYear()+'-'+(parseInt(date.getMonth())+1)+"-"+date.getDate();
@@ -193,7 +193,9 @@ export default class ProductCartScreen extends React.Component {
             Quantity:'',
             Price:'',
             DateTime:DateTime,
-            Avatar:'' 
+            Avatar:'' ,
+            Phone:phoneUser,
+            Address:addressUser
             }
             product.Title=elm.content,
             product.Avatar=elm.img,

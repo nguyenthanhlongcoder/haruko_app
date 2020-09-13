@@ -138,5 +138,38 @@ export const GetData={
           });
         });
   return keyUser
+    },
+    getUsAddress: (email,password)=>{
+      var Address=''
+        firebaseApp
+        .database()
+        .ref("/User/")
+        .orderByChild("Email")
+        .equalTo(email)
+        .on("value", (snap) => {
+          snap.forEach((element) => {
+            if (element.val().Password ===password) {
+             Address=element.val().Address;
+           }
+          });
+        });
+  return Address
+    },
+    getUsPhone: (email,password)=>{
+      var Phone=''
+        firebaseApp
+        .database()
+        .ref("/User/")
+        .orderByChild("Email")
+        .equalTo(email)
+        .on("value", (snap) => {
+          snap.forEach((element) => {
+            if (element.val().Password ===password) {
+              Phone=element.val().Phone;
+           }
+          });
+        });
+  return Phone
     }
+    
 }
