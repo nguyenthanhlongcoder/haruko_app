@@ -51,35 +51,21 @@ export default class PurchaseItem extends React.Component {
 
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.pro]}>
-            {this.props.item.date}
+            Date: {this.props.item.date}
             </Text>
           </View>
           <View style={{flexDirection:'row'}}>
           <View style={styles.containerItemChild}>
             <Text style={[styles.text, styles.text1]}>
-              {this.props.item.Total}
+              Total: {this.props.item.Total}
               <Text>đ</Text>
             </Text>
           </View>
-            <View>
-            <Text>{this.props.item.quantity}</Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row" }}>
             <View style={styles.containerItemChild}>
-            
-              <Text style={[styles.icon, { fontSize: 20 }]}>
-                {this.props.item.count}
-              </Text>
+            <Text style={[styles.text, styles.pro]}>Quanlity: {this.props.item.quantity}</Text>
+
             </View>
-            <View style={(styles.containerItemChild, { width: "50%" })}>
-              <Text
-                style={[{ textAlign: "right", fontSize: 15 }, styles.text1]}
-              >
-               
-              </Text>
-            </View>
-          </View>
+       
         </View>
       </View>
     );
@@ -100,9 +86,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
+
   },
   containerItemChild: {
     flexDirection: "row",
+    marginVertical: 2
   },
   content: {
     fontSize: 15,

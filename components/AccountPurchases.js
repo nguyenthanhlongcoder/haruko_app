@@ -25,7 +25,7 @@ export default function AccountPurchases(props) {
           }
         }}
       >
-        <View style={{ flexDirection: "row", padding: 10 }}>
+        <View style={{ flexDirection: "row", paddingVertical: 10 }}>
           <View style={[styles.containerChild]}>
             <Icon
               name="clipboard-text-outline"
@@ -46,26 +46,8 @@ export default function AccountPurchases(props) {
       </TouchableOpacity>
 
       <View style={styles.devider} />
-      <View style={styles.icons}>
-        <View style={styles.containerIcon}>
-          <AntDesign style={styles.icon} name="wallet" />
-          <Text>To Pay</Text>
-        </View>
-        <View style={styles.containerIcon}>
-          <AntDesign style={styles.icon} name="menu-fold" />
-          <Text>To Ship</Text>
-        </View>
-        <View style={styles.containerIcon}>
-          <AntDesign style={styles.icon} name="inbox" />
-          <Text>To Receive</Text>
-        </View>
-        <View style={styles.containerIcon}>
-          <View style={[styles.star, { marginBottom: 8 }]}>
-            <AntDesign style={[styles.icon, { fontSize: 30 }]} name="staro" />
-          </View>
-          <Text>To Rate</Text>
-        </View>
-      </View>
+     
+
     </View>
   );
 }
