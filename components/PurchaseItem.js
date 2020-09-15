@@ -68,6 +68,7 @@ export default class PurchaseItem extends React.Component {
        
         </View>
       </View>
+      </View>
     );
   }
 }

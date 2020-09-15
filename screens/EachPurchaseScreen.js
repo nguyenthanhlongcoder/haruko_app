@@ -84,6 +84,7 @@ export default class EachPurchaseScreen extends React.Component {
           renderItem={({ item }) => {
             return <PurchaseItem item={item} />;
           }}
+          keyExtractor={(item)=>item.key}
         />
       </View>
     );

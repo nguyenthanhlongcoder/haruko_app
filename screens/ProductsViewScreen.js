@@ -16,7 +16,7 @@ import IconAntDesign from "react-native-vector-icons/AntDesign";
 import SearchBar from "../components/SearchBar";
 import MyStatusBar from "../components/MyStatusBar";
 import Icon from "react-native-vector-icons/Foundation";
-import { GetData } from "../components/GetData";
+import { GetData } from "../modal/GetData";
 import {firebaseApp} from '../components/FirebaseConfig';
 export default class ProductsViewScreen extends React.Component {
   constructor() {
