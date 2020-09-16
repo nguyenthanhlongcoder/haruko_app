@@ -3,26 +3,20 @@ import React from "react";
 import {
   StyleSheet,
   Text,
-  Animated,
   View,
   FlatList,
-  Image,
   ScrollView,
-  ListView,
   Dimensions,
   TouchableHighlight,
   AsyncStorage,
   Alert
 } from "react-native";
-import Product from "../components/Product";
-import CategoryItem from "../components/CategoryItem";
 import { myColors } from "../assets/myColors";
-import IconAntDesign from "react-native-vector-icons/AntDesign";
 import ProductCartAppBar from "../components/ProductCartAppBar";
-import { firebaseApp } from "../components/FirebaseConfig";
 import ProductCartItem from "../components/ProductCartItem";
-import { GetData } from "../components/GetData";
-import { Avatar } from "react-native-paper";
+import { GetData } from "../modal/GetData";
+import {ModalCart} from "../modal/ModalCart"
+import {ModalOrder} from "../modal/ModalOrder"
 export default class ProductCartScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -40,31 +34,11 @@ export default class ProductCartScreen extends React.Component {
 
     this.state.product = []
     var keyUser = await GetData.getUsKey(this.state.email, this.state.password);
-    var list = []
-    firebaseApp
-      .database()
-      .ref("/User/" + keyUser + '/Cart/')
-      .on('value', data => {
-        data.forEach(e => {
-          var pro = {
-            content: '',
-            price: '',
-            count: '',
-            img: "",
-
-          }
-          pro.content = e.val().Title;
-          pro.count = e.val().Quantity;
-          pro.price = e.val().Price;
-          pro.img = e.val().Avatar;
-          this.state.product.push(pro);
-
-        })
-        this.setState({ product: this.state.product })
+   
+ 
+        this.setState({ product: await ModalCart.getCart(keyUser) });
         this.setTotal();
-      }
-      );
-
+     
 
   };
   getToken = async (user) => {
@@ -95,7 +69,7 @@ export default class ProductCartScreen extends React.Component {
       console.log("Something went wrong", error);
     }
   }
-  componentDidMount = async () => {
+  componentWillMount = async () => {
 
     await this.getToken();
     await this.defaultLoadData();
@@ -106,14 +80,14 @@ export default class ProductCartScreen extends React.Component {
     if (style === 'plus') {
 
       this.state.product[index].count = this.state.product[index].count + 1
-      this.setState({ product: this.state.product })
+      
     }
     else {
       if (this.state.product[index].count >= 1) {
         this.state.product[index].count = this.state.product[index].count - 1
-        this.setState({ product: this.state.product })
       }
     }
+    this.setState({ product: this.state.product })
     var keyUser = await GetData.getUsKey(this.state.email, this.state.password);
     var listPro = []
     this.state.product.forEach(e => {
@@ -131,19 +105,14 @@ export default class ProductCartScreen extends React.Component {
 
     })
     this.state.product = []
-    await firebaseApp
-      .database()
-      .ref("/User/" + keyUser + "/Cart/" + item.content + '/').set(listPro[index])
-
-
+    await ModalCart.updateCart(keyUser,item.content,listPro[index])
+    this.defaultLoadData()
   }
 
   removeItem = async (item, ind) => {
     var keyUser = await GetData.getUsKey(this.state.email, this.state.password);
     if (typeof (keyUser) !== 'undefined') {
-      await firebaseApp
-        .database()
-        .ref("/User/" + keyUser + "/Cart/" + item.content).remove()
+      await ModalCart.removeCartItem(keyUser,item.content)
       this.defaultLoadData()
       this.setTotal();
     }
@@ -157,31 +126,14 @@ export default class ProductCartScreen extends React.Component {
     this.setState({ total: this.state.total });
 
   }
-  getCartList = async () => {
-    var keyUser = await GetData.getUsKey(this.state.email, this.state.password);
-
-    var list = []
-    if (keyUser != null) {
-      firebaseApp
-        .database()
-        .ref("/User/" + keyUser + '/Cart/')
-        .on('value', data => {
-          data.forEach(e => {
-            list.push(e)
-
-          })
-        })
-    }
-    return list
-  }
   createOrder= async()=>{
     var keyUser=await GetData.getUsKey(this.state.email,this.state.password);
+    var addressUser=await GetData.getUsAddress(this.state.email,this.state.password);
+    var phoneUser=await GetData.getUsPhone(this.state.email,this.state.password);
     if(this.state.product.length>0){
       if (typeof(keyUser)!== 'undefined')
     {
-        var ListC=[];
-   
-  
+        
           var date= new Date();
           var Total= this.state.total
           var DateTime=date.getFullYear()+'-'+(parseInt(date.getMonth())+1)+"-"+date.getDate();
@@ -193,25 +145,18 @@ export default class ProductCartScreen extends React.Component {
             Quantity:'',
             Price:'',
             DateTime:DateTime,
-            Avatar:'' 
+            Avatar:'' ,
+            Phone:phoneUser,
+            Address:addressUser
             }
             product.Title=elm.content,
             product.Avatar=elm.img,
             product.Quantity=elm.count,
             product.Price=elm.price*elm.count,
-            firebaseApp
-           .database()
-           .ref("/User/"+keyUser+"/Order/"+product.Title).ref.update(product)
+            ModalOrder.creteOrder(keyUser,product);
          });
-           
-           firebaseApp
-           .database()
-           .ref("/User/"+keyUser+"/Cart/").ref.remove().then((result) => {
-            Alert.alert('Success !!!');
-          }).catch((err) => {
-            Alert.alert('ERRO!!!');
-          });
-        this.componentDidMount();
+        ModalCart.removeCart(keyUser);       
+        this.componentWillMount();
         this.props.navigation.navigate("ProductsViewScreen")
       }
     }

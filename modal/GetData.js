@@ -1,6 +1,6 @@
 import { firebaseApp } from "../components/FirebaseConfig"
 import {ConvertString} from "../components/ConvertString";
-import { Products } from '../dTo/Products'
+import { Products } from '../dto/Products'
 export const GetData={
     getProduct:()=>{
           var ProductList = [];
@@ -55,17 +55,7 @@ export const GetData={
       .ref("/Shop/")
       .on("value", (data) => {
         data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-            content: "",
-            price: "",
-            sold: 8,
-            category: "",
-            description: "",
-            avatar:'',
-          
-          };
+          var product =new Products();
           if (element.val().Category === cate) {
             product.content = element.val().Title;
             product.price = element.val().Price;
@@ -98,17 +88,7 @@ export const GetData={
       .ref("/Shop/")
       .on("value", (data) => {
         data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            image: "https://cf.shopee.vn/file/ead47f6e94606a532bdb90cfeff5da8a",
-            content: "",
-            price: "",
-            sold: 8,
-            category: "",
-            description: "",
-            avatar:'',
-           
-          };
+          var product =new Products();
           if (ConvertString.vnToNa(element.val().Title.toUpperCase()).search(ConvertString.vnToNa(inputText.toUpperCase()))!=-1) {
             product.content = element.val().Title;
             product.price = element.val().Price;
@@ -138,5 +118,38 @@ export const GetData={
           });
         });
   return keyUser
+    },
+    getUsAddress: (email,password)=>{
+      var Address=''
+        firebaseApp
+        .database()
+        .ref("/User/")
+        .orderByChild("Email")
+        .equalTo(email)
+        .on("value", (snap) => {
+          snap.forEach((element) => {
+            if (element.val().Password ===password) {
+             Address=element.val().Address;
+           }
+          });
+        });
+  return Address
+    },
+    getUsPhone: (email,password)=>{
+      var Phone=''
+        firebaseApp
+        .database()
+        .ref("/User/")
+        .orderByChild("Email")
+        .equalTo(email)
+        .on("value", (snap) => {
+          snap.forEach((element) => {
+            if (element.val().Password ===password) {
+              Phone=element.val().Phone;
+           }
+          });
+        });
+  return Phone
     }
+    
 }
