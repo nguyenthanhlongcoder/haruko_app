@@ -16,8 +16,7 @@ import IconAntDesign from "react-native-vector-icons/AntDesign";
 import SearchBar from "../components/SearchBar";
 import MyStatusBar from "../components/MyStatusBar";
 import Icon from "react-native-vector-icons/Foundation";
-import { GetData } from "../modal/GetData";
-import {firebaseApp} from '../components/FirebaseConfig';
+import { ModalProduct } from "../modal/ModalProduct";
 export default class ProductsViewScreen extends React.Component {
   constructor() {
     super();
@@ -27,53 +26,11 @@ export default class ProductsViewScreen extends React.Component {
       cateGory: [],
     };
   }
-  componentDidMount() {
-    console.log( this.props)
-    this.defaultLoadData();
+  componentWillMount=async()=> {
+   await this.defaultLoadData();
   }
-  defaultLoadData = () => {
-    let catelist = [
-      {
-        Title: "ALL",
-        isChecked: true,
-      },
-    ];
-    let Productlist = [];
-    firebaseApp
-      .database()
-      .ref("/Shop/")
-      .on("value", (data) => {
-        data.child("Category").forEach((element) => {
-          var cate = {
-            Title: "",
-            isChecked: false,
-          };
-          cate.Title = element.val().Title;
-          catelist.push(cate);
-        });
-        data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            content: "",
-            price: "",
-            sold: 8,
-            category: "",
-            description: "",
-            avatar: ''
-          };
-
-          product.content = element.val().Title;
-          product.price = element.val().Price;
-          product.description = element.val().Description;
-          product.avatar = element.val().Avatar;
-          product.category = element.val().Category;
-          Productlist.push(product);
-        });
-
-        this.setState({ data: catelist, product: Productlist });
-        
-      });
-      console.log(this.state.product)
+  defaultLoadData = async() => {
+   this.setState({data:await ModalProduct.getCategory(),product:await ModalProduct.getProduct()})
   };
   onCateItemPress = async (item, ind) => {
     for (var i = 0; i < this.state.data.length; i++) {
@@ -87,41 +44,11 @@ export default class ProductsViewScreen extends React.Component {
     this.setState({
       data: this.state.data,
     });
-    this.setState({ product: await GetData.getProductByCate(item.Title) });
+    this.setState({ product: await ModalProduct.getProductByCate(item.Title) });
   };
   search = async (inputText) => {
-    this.setState({ product: await GetData.getProductByName(inputText) });
+    this.setState({ product: await ModalProduct.getProductByName(inputText)});
   };
-search=(inputText)=>{
-  var Productlist = [];
-  firebaseApp
-      .database()
-      .ref("/Shop/")
-      .on("value", (data) => {
-        data.child("Product").forEach((element) => {
-          var product = {
-            content: "",
-            price: "",
-            category: "",
-            description: "",
-            avatar:'',
-           
-          };
-          if (element.val().Title.toUpperCase().search(inputText.toUpperCase())!=-1) {
-            product.content = element.val().Title;
-            product.price = element.val().Price;
-            product.description = element.val().Description;
-            product.avatar = element.val().Avatar;
-            product.category = element.val().Category;
-           
-            Productlist.push(product);
-          
-          }
-        });
-        this.setState({ product: Productlist });
-      });
-
-}
   render() {
     return (
       <View style={styles.container}>

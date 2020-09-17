@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   StatusBar,
   StyleSheet,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { myColors } from "../assets/myColors";
 import AppLoading from "expo";
 import Fonts from "../assets/Fonts";
-import Icon from "react-native-vector-icons";
+
 
 export default class Product extends React.Component {
   constructor() {
@@ -35,37 +35,45 @@ export default class Product extends React.Component {
         <TouchableOpacity onPress={this.props.onPress}>
           <View style={styles.container}>
             <Image
-            resizeMode="cover"
+              resizeMode="cover"
               style={styles.img}
               source={{ uri: this.props.item.avatar }}
             />
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.content} >
+            <Text ellipsizeMode="tail" numberOfLines={1} style={styles.content}>
               {this.props.item.content}
             </Text>
-            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 10}}>
-              <View style={{flex: 1}}/>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                justifyContent: "space-between",
+                padding: 10,
+              }}
+            >
+              <View style={{ flex: 1 }} />
               <View
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  justifyContent: 'space-between',
+                  justifyContent: "space-between",
                 }}
               >
                 <Text
                   style={{
                     color: myColors.defaultPrimaryColor,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
-                  <Text style={{ textDecorationLine: "underline", fontSize: 13}}>đ</Text>
+                  <Text
+                    style={{ textDecorationLine: "underline", fontSize: 13 }}
+                  >
+                    đ
+                  </Text>
                   {this.props.item.price}
                 </Text>
-                <Text>
-                 
-            </Text>
+                <Text></Text>
               </View>
             </View>
-
           </View>
         </TouchableOpacity>
       );
@@ -80,7 +88,7 @@ export default class Product extends React.Component {
   }
 }
 
-const width = Dimensions.get('window').width / 2 - 5
+const width = Dimensions.get("window").width / 2 - 5;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
@@ -88,17 +96,16 @@ const styles = StyleSheet.create({
     borderColor: myColors.dividerColor,
     width: width,
     height: width * 1.3,
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   img: {
-    width: '100%',
-    height: '60%',
-
+    width: "100%",
+    height: "60%",
   },
   content: {
     fontSize: 15,
     marginVertical: 5,
     marginHorizontal: 10,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
 });
