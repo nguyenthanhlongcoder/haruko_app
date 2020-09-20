@@ -4,12 +4,15 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { myColors } from "../assets/myColors";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-export default function AccountLogout() {
+export default function AccountLogout(props) {
   return (
     <TouchableOpacity
       onPress={async () => {
-        try {       
+        try {  
+            
           await AsyncStorage.setItem("status", 'false');
+          props.click(); 
+         
         } catch (error) {
           console.log("Something went wrong", error);
         }
