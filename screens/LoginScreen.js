@@ -7,7 +7,9 @@ import {
   TextInput,
   TouchableOpacity,
   AsyncStorage,
+ 
 } from "react-native";
+
 import MySatatusBar from "../components/MyStatusBar";
 import AppBarLight from "../components/AppBarLight";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -15,7 +17,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { myColors } from "../assets/myColors";
 import { set } from "react-native-reanimated";
 import { firebaseApp } from "../components/FirebaseConfig";
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({navigation,route}) {
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -26,23 +28,11 @@ export default function LoginScreen({ navigation }) {
     errorMessage: null,
     useData: {},
   });
-  React.useEffect(() => {
-    getToken();
-  })
+
   const storeToken = async (user) => {
     try {
       await AsyncStorage.setItem("userData", JSON.stringify(user));
-      await AsyncStorage.setItem("status", 'true');
-    } catch (error) {
-      console.log("Something went wrong", error);
-    }
-  }
-  const getToken = async (user) => {
-    try {
-      let userData = await AsyncStorage.getItem("userData");
-      let data = JSON.parse(userData);
-      console.log('DATA' + data);
-
+      await AsyncStorage.setItem("status", "true");
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -59,6 +49,9 @@ export default function LoginScreen({ navigation }) {
         snap.forEach((element) => {
           if (element.val().Password === data.password) {
             storeToken(JSON.stringify(element));
+            
+           
+
             navigation.goBack();
 
           }
