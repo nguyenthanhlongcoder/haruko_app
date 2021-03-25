@@ -1,6 +1,6 @@
 import { firebaseApp } from "../components/FirebaseConfig"
 import {ConvertString} from "../components/ConvertString";
-import { Products } from '../dto/Products'
+import {Products} from "./Products"
 export const GetData={
     getProduct:()=>{
           var ProductList = [];
