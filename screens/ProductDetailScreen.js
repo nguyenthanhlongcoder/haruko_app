@@ -109,7 +109,7 @@ export default class ProductDetailScreen extends React.Component {
     pro.Avatar = this.state.item.avatar;
     pro.Price = this.state.item.price;
     if (typeof keyUser !== "undefined") {
-      ModalCart.updateCart(keyUser,this.state.item.content,pro);
+      ModalCart.updateCart(keyUser,pro.Title,pro);
     }
   };
   render() {
